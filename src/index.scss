@@ -1,0 +1,101 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+/* reset css */
+
+$base03:    #002b36;
+$base02:    #073642;
+$base01:    #586e75;
+$base00:    #657b83;
+$base0:     #839496;
+$base1:     #93a1a1;
+$base2:     #eee8d5;
+$base3:     #fdf6e3;
+$yellow:    #b58900;
+$orange:    #cb4b16;
+$red:       #dc322f;
+$magenta:   #d33682;
+$violet:    #6c71c4;
+$blue:      #268bd2;
+$cyan:      #2aa198;
+$green:     #859900;
+
+@mixin font-content {
+  font-family: "arial", // windows
+			   "helvetica", // os x
+			   "Source Han Serif SC", "Noto Sans CJK SC", // linux
+			   STZhongsong, "Microsoft YaHei", // windows
+			   "PingFang SC", "Myriad Pro", 'Hiragino Sans GB', // os x
+			   "WenQuanYi Micro Hei" // linux
+}
+
+$bg:        $base3;
+$fg:        $base02;
+
+
+//[v-cloak] { display:none !important; }
+
+[v-cloak] > * { display:none }
+
+body {
+  /*background-color: $bg;
+  color: $fg;
+  @include font-content;
+ */
+}
+
+label.btn {
+  cursor: pointer;
+}
+
+.gunLite {
+  border: 1px dashed;
+  cursor: pointer;
+  height: 4rem;
+  max-width: 3rem;
+  &:hover {
+	border: 1px solid $blue;
+	box-shadow: 1px 1px $blue;
+  }
+  img {
+	width: 3rem;
+	height: 3rem;
+  }
+  span {
+	display: block;
+	text-align: left;
+	font-size: .7rem;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: clip;
+  }  
+}
+
+.gunLiteSelected {
+  border: 1px solid $red;
+  box-shadow: 1px 1px $red;
+}
+
+.gunLiteDamaged { 
+  background-color: white;
+  position: relative;
+  cursor: pointer;
+  right: -2.5rem;
+  bottom: 1rem;
+  padding: 0 .1rem;
+  font-size: 1rem;
+  line-height: normal;
+}
