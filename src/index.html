@@ -48,8 +48,8 @@
 		</div>
 		
 		<div id="tabs" class="mt-2 mb-3">
-		  <b-tabs content-class="mt-3" fill>
-			<b-tab :title="$t('tabGeneral.title')" active>
+		  <b-tabs v-model="currentTab" content-class="mt-3" fill>
+			<b-tab :title="$t('tabGeneral.title')">
 
 			  <b-row>
 				<b-col cols=6>
@@ -378,9 +378,9 @@
 		</div>
 
 		<div class="mt-3 py-2 d-flex border-top justify-content-center" id="busuanzi_container_site_pv">{{ $t('ui.visitedCount') }}:&nbsp;<span id="busuanzi_value_site_pv"></span></div>
-		<b-tooltip target="langs" triggers="hover">
-		</b-tooltip>
+		<b-tooltip target="langs" triggers="hover"></b-tooltip>
 	  </b-container>
+	  <div v-cloak class="d-flex fixed-bottom justify-content-end mr-3 mb-1"><b-button id="toTop" class="my-1" variant="primary" @click="scrollToTop(300)">{{ $t('btnToTop') }}</b-button></div>
 	</div>
   </body>
 </html>

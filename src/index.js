@@ -413,7 +413,6 @@ var UIData = {
 };
 
 
-var test = 1;
 var lang = "cn",
 	texts = messages[lang];
 var selected = {
@@ -452,7 +451,7 @@ var selectedDebounce = {
 	"userLevel": 1,
 	"userServerCustom": "",
 }
-//var currentTab = 0,
+var currentTab = 0;
 var currentCanvas = "mod";
 //var tabList = ["general", "team", "mod", "poster", "background", "adjust"];
 var now = new Date().toISOString().split('T')[0] + "   Girls' Frontline";
@@ -482,6 +481,7 @@ var selectedRate = {
 			"SMG":0,
 			"RF":0,
 			"HG":0,
+			"SG":0,
 			"MG":0,
 		},
 		"coll":{
@@ -489,6 +489,7 @@ var selectedRate = {
 			"SMGchecked": false,
 			"RFchecked": false,
 			"HGchecked": false,
+			"SGchecked": false,
 			"MGchecked": false,
 			"Allchecked": false,
 		},
@@ -1043,6 +1044,7 @@ v-on:change="onChange"
 			selectedDebounce: selectedDebounce,
 			selectedRate: selectedRate,
 			currentCanvas: currentCanvas,
+			currentTab: currentTab,
 			images: images,
 			initData: initData,
 			UIData: UIData,
@@ -1091,6 +1093,9 @@ v-on:change="onChange"
 					//this.texts = textData[this.lang];
 				}
 			},
+			msg: {
+				handler(){}
+			},
 		},
 		created() {
 			this.loading.show = false;
@@ -1138,9 +1143,23 @@ v-on:change="onChange"
 					reader.readAsDataURL(input.files[0]);
 				}
 			},
+			scrollToTop: function (scrollDuration) {
+				var cosParameter = window.scrollY / 2,
+					scrollCount = 0,
+					oldTimestamp = performance.now();
+				function step (newTimestamp) {
+					scrollCount += Math.PI / (scrollDuration / (newTimestamp - oldTimestamp));
+					if (scrollCount >= Math.PI) window.scrollTo(0, 0);
+					if (window.scrollY === 0) return;
+					window.scrollTo(0, Math.round(cosParameter + cosParameter * Math.cos(scrollCount)));
+					oldTimestamp = newTimestamp;
+					window.requestAnimationFrame(step);
+				}
+				window.requestAnimationFrame(step);
+			},
 			drawCanvas: function(){
 				console.log('drawCanvas')
-				this.msg = this.$i18n.t('message.loadPictures');
+				this.msg = this.$i18n.messages[this.lang].message.loadPictures;
 				var can = document.getElementById('resultCanvas');
 				var ctx = can.getContext('2d');
 				
@@ -1178,8 +1197,8 @@ v-on:change="onChange"
 				function counter(){
 					count--;
 					if(count === 0) {
-						_this.msg = _this.$i18n.t('message.loadDone');
 						drawImages();
+						_this.msg = _this.$i18n.messages[_this.lang].message.loadDone;
 					}
 				}
 
@@ -1226,7 +1245,7 @@ v-on:change="onChange"
 				}
 
 				function drawGuns(ctx, position, R, can, selected){
-					let s = currentCanvas,
+					let s = _this.currentCanvas,
 						ui = UIData[s];
 					let c = ui.guns.typeText, c2 = ui.guns.numText;
 					for(let i in position.text){
@@ -1256,10 +1275,9 @@ v-on:change="onChange"
 
 					function counter(){
 						count--;
-						__this.msg = __this.$i18n.t('message.loadPictures') + ': ' + (totalCount-count) + '/' + totalCount;
 						if(count === 0) {
 							drawImages();
-							__this.msg = __this.$i18n.t('message.loadDone');
+							__this.msg = __this.$i18n.messages[__this.lang].message.loadDone;
 						}
 					}
 

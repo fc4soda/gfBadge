@@ -7,7 +7,7 @@ export const jsonTexts = {
 	"textData": {
 		"cn": {
 			"title": "少女前线签名图生成器",
-			"tutorial": "建议使用 Firefox 或 Chrome 访问。<br/>渲染卡的话可以试试清除浏览器缓存再刷新。<br/>使用中遇到程序错误或有任何建议，请到 <a href='https://github.com/fc4soda/gfBadge'>github</a> 或 <a href='https://github.com/fc4soda/gfBadge'>nga</a> 反馈。",
+			"tutorial": "建议使用 Firefox 或 Chrome 访问。<br/>渲染卡的话可以试试清除浏览器缓存再刷新。<br/>使用中遇到程序错误或有任何建议，请到 <a href='https://github.com/fc4soda/gfBadge'>github</a> 或 <a href='https://bbs.nga.cn/read.php?tid=18388732'>nga</a> 反馈。",
 			"canvasSwitch": {
 				"options": [
 					{ "text": "心智升级", "value": "mod" },
@@ -17,6 +17,7 @@ export const jsonTexts = {
 			"btnSaveCfg": "保存配置",
 			"btnLoadCfg": "读取配置",
 			"btnExportPNG": "保存为图片",
+			"btnToTop": "回顶部",
 			"tabGeneral": {
 				"title": "指挥官信息",
 				"name": "指挥官名称",
@@ -95,7 +96,7 @@ export const jsonTexts = {
 		},
 		"en": {
 			"title": "GF Badge",
-			"tutorial": "It is recommended to use Google Chrome or Firefox to access this website.<br/>Feedback at <a href='https://github.com/fc4soda/gfBadge'>github[en]</a> or <a href='https://github.com/fc4soda/gfBadge'>nga[zh-cn]</a>.",
+			"tutorial": "It is recommended to use Google Chrome or Firefox to access this website.<br/>Feedback at <a href='https://github.com/fc4soda/gfBadge'>github[en]</a> or <a href='https://bbs.nga.cn/read.php?tid=18388732'>nga[zh-cn]</a>.",
 			"canvasSwitch": {
 				"options": [
 					{ "text": "Mod", "value": "mod" },
@@ -105,6 +106,7 @@ export const jsonTexts = {
 			"btnSaveCfg": "Save Config",
 			"btnLoadCfg": "Load Config",
 			"btnExportPNG": "Save Image",
+			"btnToTop": "To Top",
 			"tabGeneral": {
 				"title": "General",
 				"name": "Name",
