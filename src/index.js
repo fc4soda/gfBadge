@@ -6,9 +6,9 @@ import 'bootstrap-vue/dist/bootstrap-vue.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.min.js'
 import VueI18n from 'vue-i18n'
-import './busuanzi.pure.mini.js'
+import axios from 'axios';
 
-import jsonData from './data.json';
+import jsonData from './data_format.json';
 import { jsonTexts } from './langs.js';
 Vue.use(BootstrapVue)
 Vue.use(VueI18n)
@@ -19,8 +19,9 @@ function importAll(r) {
 
 const messages = jsonTexts.textData;
 
-const prdPrefix = 'gfbadge/';
 const isPrd = (process.env.NODE_ENV === 'production' ? true : false);
+const prdPrefix = PRD_PREFIX;
+const sitePvUrl = SITE_PV_URL, sitePvChartUrl = SITE_PV_CHART_URL;
 
 const images = importAll(require.context('../static/img/', true, /\.(png|jpe?g|svg)$/, 'sync'));
 
@@ -181,7 +182,8 @@ function drawText(ctx, content, x, y, font, fillStyle, lineWidth, strokeStyle, a
 	ctx.fillText(content, x, y);
 }
 
-const langs = jsonTexts.langs;
+const langs = jsonTexts.langs,
+	  servers = jsonTexts.servers;
 
 const star6 = '#ff4d4d',
 	  star5 = '#ffb24d',
@@ -414,10 +416,10 @@ var UIData = {
 
 
 var lang = "cn",
-	texts = messages[lang];
+	server = "cn";
 var selected = {
 	"background":"BGDefult_fixed",
-	"userServer": texts.tabGeneral.server.nameDefault,
+	"userServer": messages[lang].tabGeneral.server.nameDefault,
 	"userAdjutant":"M4A1",
 	"adjutantOffsetX": 0,
 	"adjutantOffsetY": 0,
@@ -447,7 +449,7 @@ var selectedPoster = {
 	"guns":[],
 }
 var selectedDebounce = {
-	"userName": texts.tabGeneral.nameDefault,
+	"userName": messages[lang].tabGeneral.nameDefault,
 	"userLevel": 1,
 	"userServerCustom": "",
 }
@@ -495,21 +497,6 @@ var selectedRate = {
 		},
 	},
 }
-
-var positionData = {
-	"mod": {},
-	"poster": {}
-}
-
-var initData = prepareData(jsonData);
-//console.log(initData)
-
-let c = UIData.mod.guns;
-let modGunPosition = initGunPosition(c.x, c.y, c.r, initData.modGunList, c.limit, c.gap);
-positionData.mod = modGunPosition;
-c = UIData.poster.guns;
-let allGunPosition = initGunPosition(c.x, c.y, c.r, initData.allGunList, c.limit, c.gap);
-positionData.poster = allGunPosition;
 
 function initGunPosition(xPos, yPos, R, gunList, limit, gap){
 	let typeSum = Object.keys(gunList).length,
@@ -597,11 +584,12 @@ function percentCalc(got, sum){
 }
 
 
-function prepareData(initData){
+function prepareData(initData, server){
 	let result = {}
 	let hgList=[], arList=[], smgList=[], rfList=[], mgList=[], sgList=[],
 		hgSkinList=[], arSkinList=[], smgSkinList=[], rfSkinList=[], mgSkinList=[], sgSkinList=[],
 		allGun = initData.allGun;
+	let modHgList=[], modArList=[], modSmgList=[], modRfList=[], modMgList=[], modSgList=[];
 	for(let no in allGun){
 		let gun = allGun[no],
 			item = {
@@ -615,76 +603,85 @@ function prepareData(initData){
 				"skins": gun.skins,
 				"img":gun.imgs[0]["img"]
 			};
-
-		if(gun.type=='AR'){
-			arList.push(item);
-			arSkinList.push(item);
-		} else if(gun.type=='SMG'){
-			smgList.push(item);
-			smgSkinList.push(item);
-		} else if(gun.type=='RF'){
-			rfList.push(item);
-			rfSkinList.push(item);
-		} else if(gun.type=='HG'){
-			hgList.push(item);
-			hgSkinList.push(item);
-		} else if(gun.type=='MG'){
-			mgList.push(item);
-			mgSkinList.push(item);
-		} else if(gun.type=='SG'){
-			sgList.push(item);
-			sgSkinList.push(item);
-		}
-
-		if(gun.mods){
-			var itemMod = {
-				"name": gun.mods.mod3.name,
-				"cnname": gun.mods.mod3.cnname,
-				"enname": gun.mods.mod3.enname,
-				"no": gun.mods.mod3.no,
-				"img":gun.mods.mod3.img
-			};
+		if(server == 'cn' || gun[server+'exist']){
 
 			if(gun.type=='AR'){
-				arSkinList.push(itemMod);
+				arList.push(item);
+				arSkinList.push(item);
 			} else if(gun.type=='SMG'){
-				smgSkinList.push(itemMod);
+				smgList.push(item);
+				smgSkinList.push(item);
 			} else if(gun.type=='RF'){
-				rfSkinList.push(itemMod);
+				rfList.push(item);
+				rfSkinList.push(item);
 			} else if(gun.type=='HG'){
-				hgSkinList.push(itemMod);
+				hgList.push(item);
+				hgSkinList.push(item);
 			} else if(gun.type=='MG'){
-				mgSkinList.push(itemMod);
+				mgList.push(item);
+				mgSkinList.push(item);
 			} else if(gun.type=='SG'){
-				sgSkinList.push(itemMod);
+				sgList.push(item);
+				sgSkinList.push(item);
 			}
-		}
 
+			if(gun.mods && (server=='cn' || gun.mods.mod3[server+'exist'])){
+				var itemMod = {
+					"name": gun.mods.mod3.name,
+					"cnname": gun.mods.mod3.cnname,
+					"enname": gun.mods.mod3.enname,
+					"no": gun.mods.mod3.no,
+					"img":gun.mods.mod3.img,
+					'stars': gun.mods.mod3.stars,
+				};
 
-		
-		for(let s in gun.skins){
-			let skin = gun.skins[s],
-				itemSkin = {
-					"name": skin.name,
-					"cnname": skin.cnname,
-					"enname": skin.enname,
-					"no": skin.no,
-					"img":skin.img
+				if(gun.type=='AR'){
+					arSkinList.push(itemMod);
+					modArList.push(itemMod);
+				} else if(gun.type=='SMG'){
+					smgSkinList.push(itemMod);
+					modSmgList.push(itemMod);
+				} else if(gun.type=='RF'){
+					rfSkinList.push(itemMod);
+					modRfList.push(itemMod);
+				} else if(gun.type=='HG'){
+					hgSkinList.push(itemMod);
+					modHgList.push(itemMod);
+				} else if(gun.type=='MG'){
+					mgSkinList.push(itemMod);
+					modMgList.push(itemMod);
+				} else if(gun.type=='SG'){
+					sgSkinList.push(itemMod);
+					modSgList.push(itemMod);
 				}
-			if(gun.type=='AR'){
-				arSkinList.push(itemSkin);
-			} else if(gun.type=='SMG'){
-				smgSkinList.push(itemSkin);
-			} else if(gun.type=='RF'){
-				rfSkinList.push(itemSkin);
-			} else if(gun.type=='HG'){
-				hgSkinList.push(itemSkin);
-			} else if(gun.type=='MG'){
-				mgSkinList.push(itemSkin);
-			} else if(gun.type=='SG'){
-				sgSkinList.push(itemSkin);
 			}
+			
+			for(let s in gun.skins){
+				let skin = gun.skins[s],
+					itemSkin = {
+						"name": skin.name,
+						"cnname": skin.cnname,
+						"enname": skin.enname,
+						"no": skin.no,
+						"img":skin.img
+					};
+				if(server=='cn' || skin[server+'exist']){
+					if(gun.type=='AR'){
+						arSkinList.push(itemSkin);
+					} else if(gun.type=='SMG'){
+						smgSkinList.push(itemSkin);
+					} else if(gun.type=='RF'){
+						rfSkinList.push(itemSkin);
+					} else if(gun.type=='HG'){
+						hgSkinList.push(itemSkin);
+					} else if(gun.type=='MG'){
+						mgSkinList.push(itemSkin);
+					} else if(gun.type=='SG'){
+						sgSkinList.push(itemSkin);
+					}
+				}
 
+			}
 		}
 
 	}
@@ -706,35 +703,13 @@ function prepareData(initData){
 		HG: hgSkinList
 	}
 
-	let modHgList=[], modArList=[], modSmgList=[], modRfList=[], modMgList=[], modSgList=[],
-		modGun = initData.modGun;
-	for(let i in modGun){
-		let no = modGun[i],
-			gun = allGun[no];
-		if(!gun){
-			continue;
-		}
-		let item = {
-			'name': gun.mods.mod3.name,
-			'cnname': gun.mods.mod3.cnname,
-			'enname': gun.mods.mod3.enname,
-			'no': gun.mods.mod3.no,
-			'stars': gun.mods.mod3.stars,
-			'img': gun.mods.mod3.img
-		}
-		if(gun.type=='AR'){
-			modArList.push(item);
-		} else if(gun.type=='SMG'){
-			modSmgList.push(item);
-		} else if(gun.type=='RF'){
-			modRfList.push(item);
-		} else if(gun.type=='HG'){
-			modHgList.push(item);
-		} else if(gun.type=='MG'){
-			modMgList.push(item);
-		} else if(gun.type=='SG'){
-			modSgList.push(item);
-		}	
+	result.modGunList = {
+		AR: modArList,
+		SMG: modSmgList,
+		RF: modRfList,
+		MG: modMgList,
+		SG: modSgList,
+		HG: modHgList
 	}
 
 	result.modGunList = {
@@ -1038,6 +1013,8 @@ v-on:change="onChange"
 		data: {
 			langs: langs,
 			lang: lang,
+			servers: servers,
+			server: server,
 			selected: selected,
 			selectedMod: selectedMod,
 			selectedPoster: selectedPoster,
@@ -1046,11 +1023,14 @@ v-on:change="onChange"
 			currentCanvas: currentCanvas,
 			currentTab: currentTab,
 			images: images,
-			initData: initData,
+			initData: {},
 			UIData: UIData,
 			title: title,
 			loading: loading,
 			msg: '',
+			positionData: {"mod": {},"poster": {}},
+			pv: 0,
+			sitePvChartUrl: sitePvChartUrl, 
 		},
 		computed: {},
 		components: {
@@ -1093,12 +1073,29 @@ v-on:change="onChange"
 					//this.texts = textData[this.lang];
 				}
 			},
-			msg: {
-				handler(){}
+			server: {
+				immediate: true,
+				handler(){
+					this.positionData = {
+						"mod": {},
+						"poster": {}
+					}
+
+					this.initData = prepareData(jsonData, this.server);
+
+					let c = UIData.mod.guns;
+					let modGunPosition = initGunPosition(c.x, c.y, c.r, this.initData.modGunList, c.limit, c.gap);
+					this.positionData.mod = modGunPosition;
+					c = UIData.poster.guns;
+					let allGunPosition = initGunPosition(c.x, c.y, c.r, this.initData.allGunList, c.limit, c.gap);
+					this.positionData.poster = allGunPosition;	
+					this.drawCanvas();
+				}
 			},
 		},
 		created() {
 			this.loading.show = false;
+			this.doGet();
 		},
 		mounted: function () {
 			this.$nextTick(function () {
@@ -1143,6 +1140,18 @@ v-on:change="onChange"
 					reader.readAsDataURL(input.files[0]);
 				}
 			},
+			doGet: function(){
+				var _this = this;
+				axios.get(sitePvUrl)
+					.then(function (response) {
+						_this.pv = response.data[0].second;
+					})
+					.catch(function (error) {
+						console.log(error);
+					})
+					.finally(function () {
+					});
+			},
 			scrollToTop: function (scrollDuration) {
 				var cosParameter = window.scrollY / 2,
 					scrollCount = 0,
@@ -1165,7 +1174,7 @@ v-on:change="onChange"
 				
 				let s = this.currentCanvas,
 					uiData = UIData[s],
-					position = positionData[s];
+					position = this.positionData[s];
 				let c = uiData["background"];
 				//$('#resultCanvas').css('width', c.w);
 				//$('#resultCanvas').css('height', c.h);
@@ -1291,7 +1300,8 @@ v-on:change="onChange"
 			},
 		}
 	})
+
+
 }
 
 component();
-//})

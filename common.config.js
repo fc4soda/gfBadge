@@ -22,4 +22,7 @@ module.exports = {
 		new MiniCssExtractPlugin({
 		}),
 	],
+	externals: {
+		kis3: 'kis3',
+	},
 };

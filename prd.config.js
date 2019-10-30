@@ -4,6 +4,7 @@ const common = require('./common.config.js')
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
 module.exports = merge(common, {
 	mode: 'production',
@@ -16,6 +17,11 @@ module.exports = merge(common, {
 			filename: '[name].[hash].css',
 			//chunkFilename: '[id].[hash].css',
 			ignoreOrder: false,
+		}),
+		new webpack.DefinePlugin({
+			PRD_PREFIX: JSON.stringify('gfbadge/'),
+			SITE_PV_URL: JSON.stringify('https://www.fc4soda.moe/kis3/stats?view=count&url=fc4soda.github.io/gfbadge.html&format=json'),
+			SITE_PV_CHART_URL: JSON.stringify('https://www.fc4soda.moe/kis3/stats?view=months&url=fc4soda.github.io/gfbadge.html&format=chart'),
 		}),
 	],
 	output: {

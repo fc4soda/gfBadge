@@ -15,10 +15,17 @@
 	
 	<div v-cloak id="app">
 	  <b-container class="mx-auto mb-3 w-75 border-left border-right border-bottom rounded">
-		<b-form-group class="d-flex flex-row-reverse">
-		  <b-form-radio-group buttons button-variant="outline-primary" id="langs" v-model="lang" name="langsRadio">
-			<b-form-radio class="m-1" v-for="(item, idx) in langs" :key="idx" :value="idx">{{item}}</b-form-radio>
-		  </b-form-radio-group>
+		<div class="d-flex justify-content-between">
+		  <b-form-group>{{$t('selectServer')}}:
+			<b-form-radio-group buttons button-variant="outline-dark" id="servers" v-model="server" name="serversRadio">
+			  <b-form-radio class="my-1" v-for="(item, idx) in servers" :key="idx" :value="idx">{{item}}</b-form-radio>
+			</b-form-radio-group>
+		  </b-form-group>
+		  <b-form-group>{{$t('selectLang')}}:
+			<b-form-radio-group buttons button-variant="outline-primary" id="langs" v-model="lang" name="langsRadio">
+			  <b-form-radio class="my-1" v-for="(item, idx) in langs" :key="idx" :value="idx">{{item}}</b-form-radio>
+			</b-form-radio-group>
+		</div>
 		</b-form-group>
 		<p class="h2 text-center">{{ $t('title') }}</p>
 		<p id="tutorial" v-html="$t('tutorial')" class="mx-auto my-4"></p>
@@ -377,11 +384,12 @@
 		  </b-tabs>
 		</div>
 
-		<div class="mt-3 py-2 d-flex border-top justify-content-center" id="busuanzi_container_site_pv">{{ $t('ui.visitedCount') }}:&nbsp;<span id="busuanzi_value_site_pv"></span></div>
+		<div class="mt-3 py-2 d-flex border-top justify-content-center" id="webStatistics">{{ $t('ui.visitedCount') }}:&nbsp;<b-link :href="sitePvChartUrl">{{pv}}</b-link></div>
 		<b-tooltip target="langs" triggers="hover"></b-tooltip>
 	  </b-container>
 	  <div v-cloak class="d-flex fixed-bottom justify-content-end mr-3 mb-1"><b-button id="toTop" class="my-1" variant="primary" @click="scrollToTop(300)">{{ $t('btnToTop') }}</b-button></div>
 	</div>
+	<script src="https://www.fc4soda.moe/kis3/kis3.js"></script>
   </body>
 </html>
 
