@@ -1,5 +1,5 @@
 export const jsonTexts = {
-	"ver": "20191020",
+	"ver": "20191117",
 	"langs": {
 		"cn": "简中",
 		"en": "English",
@@ -24,6 +24,8 @@ export const jsonTexts = {
 			"selectServer": "服务器",
 			"btnSaveCfg": "保存配置",
 			"btnLoadCfg": "读取配置",
+			"btnSaveCfgJSON": "导出配置",
+			"btnLoadCfgJSON": "导入配置",
 			"btnExportPNG": "保存为图片",
 			"btnToTop": "回顶部",
 			"tabGeneral": {
@@ -92,9 +94,16 @@ export const jsonTexts = {
 
 			},
 			"message":{
-				"loadPictures": "图片加载中",
+				"loadPictures": "图片加载中...",
 				"loadDone": "加载完成",
 				"loadPage": "页面加载中...",
+				"generatePicture": "生成图片中...",
+				"generateDone": "生成图片完成",
+				"saveCfg": "保存配置中...",
+				"saveCfgDone": "保存配置完成",
+				"loadCfg": "加载配置中...",
+				"loadCfgDone": "加载配置完成",
+				"loadCfgTime": "加载的配置创建时间为",
 			},
 			"ui":{
 				"selectTypeAll": "全选",
@@ -115,6 +124,8 @@ export const jsonTexts = {
 			"selectServer": "Server",
 			"btnSaveCfg": "Save Config",
 			"btnLoadCfg": "Load Config",
+			"btnSaveCfgJSON": "Save JSON Config",
+			"btnLoadCfgJSON": "Load JSON Config",
 			"btnExportPNG": "Save Image",
 			"btnToTop": "To Top",
 			"tabGeneral": {
@@ -171,9 +182,16 @@ export const jsonTexts = {
 				"backgroundCustomStretch": "Custom Background Image Stretch"
 			},
 			"message":{
-				"loadPictures": "Loading Pictures",
+				"loadPictures": "Loading Pictures...",
 				"loadDone": "Loaded",
 				"loadPage": "Loading Page...",
+				"generatePicture": "Generating Picture...",
+				"generateDone": "Generated",
+				"saveCfg": "Saving Config...",
+				"saveCfgDone": "Config Saved",
+				"loadCfg": "Loading Config...",
+				"loadCfgDone": "Config Loaded",
+				"loadCfgTime": "Loaded Config Created At",
 			},
 			"ui":{
 				"selectTypeAll": "Select All",
@@ -194,6 +212,8 @@ export const jsonTexts = {
 			"selectServer": "Server",
 			"btnSaveCfg": "Save Config",
 			"btnLoadCfg": "Load Config",
+			"btnSaveCfgJSON": "Save JSON Config",
+			"btnLoadCfgJSON": "Load JSON Config",
 			"btnExportPNG": "Save Image",
 			"btnToTop": "To Top",
 			"tabGeneral": {
@@ -250,9 +270,16 @@ export const jsonTexts = {
 				"backgroundCustomStretch": "Custom Background Image Stretch"
 			},
 			"message":{
-				"loadPictures": "Loading Pictures",
+				"loadPictures": "Loading Pictures...",
 				"loadDone": "Loaded",
 				"loadPage": "Loading Page...",
+				"generatePicture": "Generating Picture...",
+				"generateDone": "Generated",
+				"saveCfg": "Saving Config...",
+				"saveCfgDone": "Config Saved",
+				"loadCfg": "Loading Config...",
+				"loadCfgDone": "Config Loaded",
+				"loadCfgTime": "Loaded Config Created At",
 			},
 			"ui":{
 				"selectTypeAll": "Select All",

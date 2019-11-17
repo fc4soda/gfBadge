@@ -1,198 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<title id="title" v-cloak>{{ title }}</title>
-  </head>
-  <body>
-	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
 	<div id="loading" v-if="show" class="text-center d-flex justify-content-center">
-	  <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>
-	  <strong class="d-inline-block">Loading...</strong>
+		<div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>
+		<strong class="d-inline-block">Loading...</strong>
 	</div>
-	
+
 	<div v-cloak id="app">
-	  <b-container class="mx-auto mb-3 w-75 border-left border-right border-bottom rounded">
-		<div class="d-flex justify-content-between">
-		  <b-form-group>{{$t('selectServer')}}:
-			<b-form-radio-group buttons button-variant="outline-dark" id="servers" v-model="server" name="serversRadio">
-			  <b-form-radio class="my-1" v-for="(item, idx) in servers" :key="idx" :value="idx">{{item}}</b-form-radio>
-			</b-form-radio-group>
-		  </b-form-group>
-		  <b-form-group>{{$t('selectLang')}}:
-			<b-form-radio-group buttons button-variant="outline-primary" id="langs" v-model="lang" name="langsRadio">
-			  <b-form-radio class="my-1" v-for="(item, idx) in langs" :key="idx" :value="idx">{{item}}</b-form-radio>
-			</b-form-radio-group>
-		</div>
-		</b-form-group>
-		<p class="h2 text-center">{{ $t('title') }}</p>
-		<p id="tutorial" v-html="$t('tutorial')" class="mx-auto my-4"></p>
-		<div class="mt-3 d-flex justify-content-center">
-		  <canvas class="border" id="resultCanvas" :width="UIData[currentCanvas].background.w" :height="UIData[currentCanvas].background.h"></canvas>
-		</div>
-
-		<div class="d-flex flex-row align-content-center" line-height="1.6rem">
-		  <div class="mr-4 d-flex flex-column align-content-center justify-content-center" style="margin-top: .8rem; cursor: pointer !important;">
-			<b-form-group label="">
-			  <b-form-radio-group id="canvasSwitch"	v-model="currentCanvas" :options="$t('canvasSwitch.options')"
-								  button-variant="outline-success" size="md" buttons></b-form-radio-group>
-			</b-form-group>
-		  </div>
-		  
-		  <div class="mx-4 flex-fill align-self-stretch d-flex flex-column align-content-center justify-content-center">
-			<div>{{ msg }}</div>
-		  </div>
-		  
-		  <div class="ml-4 align-self-stretch d-flex flex-column align-content-center justify-content-center">
-			<div class="ml-4 align-self-stretch">
-			  <b-button id="saveCfgBtn" class="my-1 d-none" variant="primary" @click="storeAll">{{ $t('btnSaveCfg') }}</b-button>
-			  <b-button id="loadCfgBtn" class="my-1 d-none" variant="primary" @click="restoreAll">{{ $t('btnLoadCfg') }}</b-button>
-			  <b-button id="exportPNGBtn" class="my-1" variant="primary" @click="exportPNG">{{ $t('btnExportPNG') }}</b-button>
+		<b-container class="mx-auto mb-3 w-75 border-left border-right border-bottom rounded">
+			<div class="d-flex justify-content-between">
+				<b-form-group>{{$t('selectServer')}}:
+					<b-form-radio-group buttons button-variant="outline-dark" id="servers" v-model="server"
+						name="serversRadio">
+						<b-form-radio class="my-1" v-for="(item, idx) in servers" :key="idx" :value="idx">{{item}}
+						</b-form-radio>
+					</b-form-radio-group>
+				</b-form-group>
+				<b-form-group>{{$t('selectLang')}}:
+					<b-form-radio-group buttons button-variant="outline-primary" id="langs" v-model="lang"
+						name="langsRadio">
+						<b-form-radio class="my-1" v-for="(item, idx) in langs" :key="idx" :value="idx">{{item}}
+						</b-form-radio>
+					</b-form-radio-group>
 			</div>
-		  </div>
-		</div>
-		
-		<div id="tabs" class="mt-2 mb-3">
-		  <b-tabs v-model="currentTab" content-class="mt-3" fill>
-			<b-tab :title="$t('tabGeneral.title')">
+			</b-form-group>
+			<p class="h2 text-center">{{ $t('title') }}</p>
+			<p id="tutorial" v-html="$t('tutorial')" class="mx-auto my-4"></p>
+			<div class="mt-3 d-flex justify-content-center">
+				<canvas class="border" id="resultCanvas" :width="UIData[currentCanvas].background.w"
+					:height="UIData[currentCanvas].background.h"></canvas>
+			</div>
 
-			  <b-row>
-				<b-col cols=6>
-				  <b-form-group label-cols="3" label-align="right" :label="$t('tabGeneral.name')" label-for="tabGeneralName">
-					<b-form-input id="tabGeneralName" v-model="selectedDebounce.userName" :placeholder="$t('tabGeneral.nameDefault')" @input="debounceInput"></b-form-input>
-				  </b-form-group>
-				</b-col>
-				<b-col cols=5>
-				  <b-form-group label-cols="5" label-align="right" :label="$t('tabGeneral.level')" label-for="tabGeneralLevel">
-					<b-form-input id="tabGeneralLevel" type="number" placeholder="1+" min=1 v-model.number="selectedDebounce.userLevel" @input="debounceInput"></b-form-input>
-				  </b-form-group>
-				</b-col>
-			  </b-row>
-			  
-			  <b-row>
-				<b-col cols=6>
-				  <b-form-group label-cols="3" label-align="right" :label="$t('tabGeneral.server.name')" label-for="tabGeneralServerName">
-					<b-form-select id="tabGeneralServerName" v-model="selected.userServer" :options="$t('tabGeneral.server.options')">
-					  <template v-slot:first>
-						<option :value="$t('tabGeneral.server.nameDefault')" disabled>------</option>
-					  </template>
-					</b-form-select>
-				  </b-form-group>
-				</b-col>
-				<b-col cols=5>
-				  <b-form-group label-cols="5" label-align="right" :label="$t('tabGeneral.server.customServer')" label-for="tabGeneralServerCustomName">
-					<b-form-input id="tabGeneralServerCustomName" v-model="selectedDebounce.userServerCustom" :placeholder="$t('tabGeneral.server.nameDefault')" @input="debounceInput"></b-form-input>
-				  </b-form-group>
-				</b-col>
-			  </b-row>
-			  
-			  <b-row>
-				<b-col cols=6>
-				  <b-form-group label-cols="3" label-align="right" :label="$t('tabGeneral.avatar.name')" label-for="tabGeneralAvatarName">
-					<b-form-file id="tabGeneralAvatarName" accept="image/*" v-model="selectedMod.userAvatar" :placeholder="$t('tabGeneral.avatar.select')" @change="img2base64"></b-form-file>
-				  </b-form-group>
-				</b-col>
-				<b-col cols=4>
-				  <b-button class="d-inline" @click="selectedMod.userAvatar = ''" class="my-1">{{ $t('tabGeneral.avatar.clear') }}</b-button>
-				</b-col>
-			  </b-row>
-
-			</b-tab>
-			<b-tab id="tabTeam" :title="$t('tabTeam.title')">
-
-
-			  <div class="mb-3" v-for="(guns, type) in initData.skinGunList" :key="type">
-				<div class="gunType border text-md-center mb-1 mt-3">{{type}}</div>
-				<div class="gunContainer d-flex flex-row flex-wrap">
-				  <team-gun-lite v-for="gun in guns" :label='gun[lang+"name"]' :gun_name='gun.name' :id='gun.no' :key="gun.no" v-model="selected.userAdjutant"></team-gun-lite>
+			<div class="d-flex flex-row align-content-center" line-height="1.6rem">
+				<div class="mr-4 d-flex flex-column align-content-center justify-content-center"
+					style="margin-top: .8rem; cursor: pointer !important;">
+					<b-form-group label="">
+						<b-form-radio-group id="canvasSwitch" v-model="currentCanvas"
+							:options="$t('canvasSwitch.options')" button-variant="outline-success" size="md" buttons>
+						</b-form-radio-group>
+					</b-form-group>
 				</div>
-			  </div>
-			  
-			</b-tab>
-			<b-tab :title="$t('tabMod.title')">
-			  
-			  <!-- <gun-checkall :guns='initData.modGunList' v-model="selected.mod.coll.Allchecked" :selected='selected.mod.guns'></gun-checkall> -->
-			  <div class="mb-3" v-for="(guns, type) in initData.modGunList" :key="type">	
-				<gun-type-checkbox :guns='guns' v-model="selectedRate.mod.coll[type+'checked']" :type='type' :selected='selectedMod' :selected_rate='selectedRate' :text='$t("ui.selectTypeAll")' :current_tab='"mod"'></gun-type-checkbox>
-				<gun-type :type='type' :guns='guns'></gun-type>
-				<div v-if="guns.length>0" class="gunContainer d-flex flex-row flex-wrap">
-				  <mod-gun-lite v-for="gun in guns" :label='gun[lang+"name"]' :id="gun.no" :gun_name='gun.name' :key="gun.no" :gun_type="type" :collection_rate="selectedRate.mod.collectionRate" v-model="selectedMod.guns"></mod-gun-lite>
-				</div v-if="guns.length>0">
-			  </div v-if="guns.length>0">
 
-			</b-tab>
-			<b-tab :title="$t('tabPoster.title')">
+				<div
+					class="mx-4 flex-fill align-self-stretch d-flex flex-column align-content-center justify-content-center">
+					<div>{{ msg }}</div>
+				</div>
 
-			  <!-- <gun-checkall :guns='initData.allGunList' v-model="selected.poster.coll.Allchecked" :selected='selected.poster.guns'></gun-checkall> -->
-			  <div class="mb-3" v-for="(guns, type) in initData.allGunList" :key="type">	
-				<gun-type-checkbox :guns='guns' v-model="selectedRate.poster.coll[type+'checked']" :type='type' :selected='selectedPoster' :selected_rate='selectedRate' :text='$t("ui.selectTypeAll")' :current_tab='"poster"'></gun-type-checkbox>
-				<gun-type :type='type' :guns='guns'></gun-type>
-				<div v-if="guns.length>0" class="gunContainer d-flex flex-row flex-wrap">
-				  <mod-gun-lite v-for="gun in guns" :label='gun[lang+"name"]' :id="gun.no" :gun_name='gun.name' :key="gun.no" :gun_type="type" :collection_rate="selectedRate.poster.collectionRate" v-model="selectedPoster.guns"></mod-gun-lite>
-				</div v-if="guns.length>0">
-			  </div v-if="guns.length>0">
+				<div class="ml-4 align-self-stretch d-flex flex-column align-content-center justify-content-center">
+					<div class="ml-4 align-self-stretch">
+						<b-button id="saveCfgBtn" class="my-1" variant="secondary" @click="storeAll"><i
+								class="fa fa-angle-double-down"></i>&nbsp;{{ $t('btnSaveCfg') }}</b-button>
+						<b-button id="loadCfgBtn" class="my-1" variant="secondary" @click="restoreAll"><i
+								class="fa fa-angle-double-up"></i>&nbsp;{{ $t('btnLoadCfg') }}</b-button>
+						<b-button id="saveCfgBtn" class="my-1" variant="dark" @click="exportJSON"><i
+								class="fa fa-download"></i>&nbsp;{{ $t('btnSaveCfgJSON') }}</b-button>
+						<b-button id="loadCfgBtn" class="my-1" variant="dark" @click="$refs.importJSONInput.$el.click()"><i
+								class="fa fa-upload"></i>&nbsp;{{ $t('btnLoadCfgJSON') }}</b-button>
+						<b-form-file ref="importJSONInput" @change="importJSON" class="d-none" accept="application/json" plain></b-form-file>
+						<b-button id="exportPNGBtn" class="my-1" variant="primary" @click="exportPNG"><i
+								class="fa fa-image"></i>&nbsp;{{ $t('btnExportPNG') }}</b-button>
+					</div>
+				</div>
+			</div>
 
-			</b-tab>
-			<b-tab :title="$t('tabBackground.title')">
-			  
-			  <b-form-group class="d-inline-block mr-2 m-2 p-1" v-for="(item, idx) in initData.background" :key="idx">
-				<b-form-radio-group buttons button-variant="outline-primary" v-model="selected.background" name="backgroundRadio">
-				  <b-form-radio :value="item.img">{{item[lang+'name']}}</b-form-radio>
-				</b-form-radio-group>
-			  </b-form-group>
-			  
-			</b-tab>
-			<b-tab :title="$t('tabAdjust.title')">
+			<div id="tabs" class="mt-2 mb-3">
+				<b-tabs v-model="currentTab" content-class="mt-3" fill>
+					<b-tab>
+						<template v-slot:title>
+							<i class="fa fa-info-circle"></i>&nbsp;{{$t('tabGeneral.title')}}
+						</template>
+						<b-row>
+							<b-col cols=6>
+								<b-form-group label-cols="3" label-align="right" :label="$t('tabGeneral.name')"
+									label-for="tabGeneralName">
+									<b-form-input id="tabGeneralName" v-model="selectedDebounce.userName"
+										:placeholder="$t('tabGeneral.nameDefault')" @input="debounceInput">
+									</b-form-input>
+								</b-form-group>
+							</b-col>
+							<b-col cols=5>
+								<b-form-group label-cols="5" label-align="right" :label="$t('tabGeneral.level')"
+									label-for="tabGeneralLevel">
+									<b-form-input id="tabGeneralLevel" type="number" placeholder="1+" min=1
+										v-model.number="selectedDebounce.userLevel" @input="debounceInput">
+									</b-form-input>
+								</b-form-group>
+							</b-col>
+						</b-row>
 
-			  <b-card title-tag="h5" border-variant="light" :title="$t('tabAdjust.adjutantOffset')">
-				<b-row>
-				  <b-col cols=5>
-					<b-form-group label-cols="3" label-align="right" :label="$t('tabAdjust.adjutantOffsetX')" label-for="adjutantOffsetX">
-					  <b-input-group>
-						<b-input-group-prepend>
-						  <b-btn variant="outline-danger" @click="selected.adjutantOffsetX-=5">-</b-btn>
-						</b-input-group-prepend>
-						<b-form-input id="adjutantOffsetX" type="number" placeholder="0" step="1" v-model.number="selected.adjutantOffsetX" @input="debounceInput"></b-form-input>
-						<b-input-group-append>
-						  <b-btn variant="outline-success" @click="selected.adjutantOffsetX=parseInt(selected.adjutantOffsetX)+parseInt(5)">+</b-btn>
-						</b-input-group-append> 
-					  </b-input-group>
-					</b-form-group>
-				  </b-col>
-				  <b-col cols=5>
-					<b-form-group label-cols="3" label-align="right" :label="$t('tabAdjust.adjutantOffsetY')" label-for="adjutantOffsetY">
-					  <b-input-group>
-						<b-input-group-prepend>
-						  <b-btn variant="outline-danger" @click="selected.adjutantOffsetY-=5">-</b-btn>
-						</b-input-group-prepend>
-						<b-form-input id="adjutantOffsetY" type="number" placeholder="0" step="1" v-model.number="selected.adjutantOffsetY" @input="debounceInput"></b-form-input>
-						<b-input-group-append>
-						  <b-btn variant="outline-success" @click="selected.adjutantOffsetY=parseInt(selected.adjutantOffsetY)+parseInt(5)">+</b-btn>
-						</b-input-group-append> 
-					  </b-input-group>
-					</b-form-group>
-				  </b-col>
-				</b-row>
-				<b-row>
-				  <b-col cols=5>
-					<b-form-group label-cols="3" label-align="right" :label="$t('tabAdjust.adjutantScaleFactor')" label-for="adjutantScaleFactor">
-					  <b-input-group>
-						<b-input-group-prepend>
-						  <b-btn variant="outline-danger" @click="selected.adjutantScaleFactor=(parseFloat(selected.adjutantScaleFactor)-0.03).toFixed(2)">-</b-btn>
-						</b-input-group-prepend>
-						<b-form-input id="adjutantScaleFactor" type="number" placeholder="1" step="0.01" v-model.number="selected.adjutantScaleFactor" @input="debounceInput"></b-form-input>
-						<b-input-group-append>
-						  <b-btn variant="outline-success" @click="selected.adjutantScaleFactor=(parseFloat(selected.adjutantScaleFactor)+0.03).toFixed(2)">+</b-btn>
-						</b-input-group-append> 
-					  </b-input-group>
-					</b-form-group>
-				  </b-col>
-				</b-row>
-			  </b-card>
+						<b-row>
+							<b-col cols=6>
+								<b-form-group label-cols="3" label-align="right" :label="$t('tabGeneral.server.name')"
+									label-for="tabGeneralServerName">
+									<b-form-select id="tabGeneralServerName" v-model="selected.userServer"
+										:options="$t('tabGeneral.server.options')">
+										<template v-slot:first>
+											<option :value="$t('tabGeneral.server.nameDefault')" disabled>------
+											</option>
+										</template>
+									</b-form-select>
+								</b-form-group>
+							</b-col>
+							<b-col cols=5>
+								<b-form-group label-cols="5" label-align="right"
+									:label="$t('tabGeneral.server.customServer')"
+									label-for="tabGeneralServerCustomName">
+									<b-form-input id="tabGeneralServerCustomName"
+										v-model="selectedDebounce.userServerCustom"
+										:placeholder="$t('tabGeneral.server.nameDefault')" @input="debounceInput">
+									</b-form-input>
+								</b-form-group>
+							</b-col>
+						</b-row>
 
-			  <!-- <b-card class="d-none" title-tag="h5" border-variant="light" :title="texts.tabAdjust.adjutantCustom">
+						<b-row>
+							<b-col cols=6>
+								<b-form-group label-cols="3" label-align="right" :label="$t('tabGeneral.avatar.name')"
+									label-for="tabGeneralAvatarName">
+									<b-form-file id="tabGeneralAvatarName" accept="image/*"
+										v-model="selectedMod.userAvatar" :placeholder="$t('tabGeneral.avatar.select')"
+										@change="img2base64"></b-form-file>
+								</b-form-group>
+							</b-col>
+							<b-col cols=4>
+								<b-button class="d-inline" @click="selectedMod.userAvatar = ''" class="my-1">
+									{{ $t('tabGeneral.avatar.clear') }}</b-button>
+							</b-col>
+						</b-row>
+
+					</b-tab>
+					<b-tab id="tabTeam" :title="$t('tabTeam.title')">
+						<template v-slot:title>
+							<i class="fa fa-user"></i>&nbsp;{{$t('tabTeam.title')}}
+						</template>
+						<div class="mb-3" v-for="(guns, type) in initData.skinGunList" :key="type">
+							<div class="gunType border text-md-center mb-1 mt-3">{{type}}</div>
+							<div class="gunContainer d-flex flex-row flex-wrap">
+								<team-gun-lite v-for="gun in guns" :label='gun[lang+"name"]' :gun_name='gun.name'
+									:id='gun.no' :key="gun.no" v-model="selected.userAdjutant"></team-gun-lite>
+							</div>
+						</div>
+
+					</b-tab>
+					<b-tab :title="$t('tabMod.title')">
+						<template v-slot:title>
+							<i class="fa fa-dice-d6"></i>&nbsp;{{$t('tabMod.title')}}
+						</template>
+						<!-- <gun-checkall :guns='initData.modGunList' v-model="selected.mod.coll.Allchecked" :selected='selected.mod.guns'></gun-checkall> -->
+						<div class="mb-3" v-for="(guns, type) in initData.modGunList" :key="type">
+							<gun-type-checkbox :guns='guns' v-model="selectedRate.mod.coll[type+'checked']" :type='type'
+								:selected='selectedMod' :selected_rate='selectedRate' :text='$t("ui.selectTypeAll")'
+								:current_tab='"mod"'></gun-type-checkbox>
+							<gun-type :type='type' :guns='guns'></gun-type>
+							<div v-if="guns.length>0" class="gunContainer d-flex flex-row flex-wrap">
+								<mod-gun-lite :ref="'mod_'+gun.no" v-for="gun in guns" :label='gun[lang+"name"]'
+									:id="gun.no" :gun_name='gun.name' :key="gun.no" :gun_type="type"
+									:collection_rate="selectedRate.mod.collectionRate" v-model="selectedMod.guns">
+								</mod-gun-lite>
+							</div v-if="guns.length>0">
+						</div v-if="guns.length>0">
+
+					</b-tab>
+					<b-tab :title="$t('tabPoster.title')">
+						<template v-slot:title>
+							<i class="fa fa-table"></i>&nbsp;{{$t('tabPoster.title')}}
+						</template>
+						<!-- <gun-checkall :guns='initData.allGunList' v-model="selected.poster.coll.Allchecked" :selected='selected.poster.guns'></gun-checkall> -->
+						<div class="mb-3" v-for="(guns, type) in initData.allGunList" :key="type">
+							<gun-type-checkbox :guns='guns' v-model="selectedRate.poster.coll[type+'checked']"
+								:type='type' :selected='selectedPoster' :selected_rate='selectedRate'
+								:text='$t("ui.selectTypeAll")' :current_tab='"poster"'></gun-type-checkbox>
+							<gun-type :type='type' :guns='guns'></gun-type>
+							<div v-if="guns.length>0" class="gunContainer d-flex flex-row flex-wrap">
+								<mod-gun-lite v-for="gun in guns" :label='gun[lang+"name"]' :id="gun.no"
+									:gun_name='gun.name' :key="gun.no" :gun_type="type"
+									:collection_rate="selectedRate.poster.collectionRate" v-model="selectedPoster.guns">
+								</mod-gun-lite>
+							</div v-if="guns.length>0">
+						</div v-if="guns.length>0">
+
+					</b-tab>
+					<b-tab :title="$t('tabBackground.title')">
+						<template v-slot:title>
+							<i class="fa fa-image"></i>&nbsp;{{$t('tabBackground.title')}}
+						</template>
+						<b-form-group class="d-inline-block mr-2 m-2 p-1" v-for="(item, idx) in initData.background"
+							:key="idx">
+							<b-form-radio-group buttons button-variant="outline-primary" v-model="selected.background"
+								name="backgroundRadio">
+								<b-form-radio :value="item.img">{{item[lang+'name']}}</b-form-radio>
+							</b-form-radio-group>
+						</b-form-group>
+
+					</b-tab>
+					<b-tab :title="$t('tabAdjust.title')">
+						<template v-slot:title>
+							<i class="fa fa-wrench"></i>&nbsp;{{$t('tabAdjust.title')}}
+						</template>
+						<b-card title-tag="h5" border-variant="light" :title="$t('tabAdjust.adjutantOffset')">
+							<b-row>
+								<b-col cols=5>
+									<b-form-group label-cols="3" label-align="right"
+										:label="$t('tabAdjust.adjutantOffsetX')" label-for="adjutantOffsetX">
+										<b-input-group>
+											<b-input-group-prepend>
+												<b-btn variant="outline-danger" @click="selected.adjutantOffsetX-=5">-
+												</b-btn>
+											</b-input-group-prepend>
+											<b-form-input id="adjutantOffsetX" type="number" placeholder="0" step="1"
+												v-model.number="selected.adjutantOffsetX" @input="debounceInput">
+											</b-form-input>
+											<b-input-group-append>
+												<b-btn variant="outline-success"
+													@click="selected.adjutantOffsetX=parseInt(selected.adjutantOffsetX)+parseInt(5)">
+													+</b-btn>
+											</b-input-group-append>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col cols=5>
+									<b-form-group label-cols="3" label-align="right"
+										:label="$t('tabAdjust.adjutantOffsetY')" label-for="adjutantOffsetY">
+										<b-input-group>
+											<b-input-group-prepend>
+												<b-btn variant="outline-danger" @click="selected.adjutantOffsetY-=5">-
+												</b-btn>
+											</b-input-group-prepend>
+											<b-form-input id="adjutantOffsetY" type="number" placeholder="0" step="1"
+												v-model.number="selected.adjutantOffsetY" @input="debounceInput">
+											</b-form-input>
+											<b-input-group-append>
+												<b-btn variant="outline-success"
+													@click="selected.adjutantOffsetY=parseInt(selected.adjutantOffsetY)+parseInt(5)">
+													+</b-btn>
+											</b-input-group-append>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							<b-row>
+								<b-col cols=5>
+									<b-form-group label-cols="3" label-align="right"
+										:label="$t('tabAdjust.adjutantScaleFactor')" label-for="adjutantScaleFactor">
+										<b-input-group>
+											<b-input-group-prepend>
+												<b-btn variant="outline-danger"
+													@click="selected.adjutantScaleFactor=(parseFloat(selected.adjutantScaleFactor)-0.03).toFixed(2)">
+													-</b-btn>
+											</b-input-group-prepend>
+											<b-form-input id="adjutantScaleFactor" type="number" placeholder="1"
+												step="0.01" v-model.number="selected.adjutantScaleFactor"
+												@input="debounceInput"></b-form-input>
+											<b-input-group-append>
+												<b-btn variant="outline-success"
+													@click="selected.adjutantScaleFactor=(parseFloat(selected.adjutantScaleFactor)+0.03).toFixed(2)">
+													+</b-btn>
+											</b-input-group-append>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+						</b-card>
+
+						<!-- <b-card class="d-none" title-tag="h5" border-variant="light" :title="texts.tabAdjust.adjutantCustom">
 				   <b-row>
 					 <b-col cols=6>
 					   <b-form-group label-cols="3" label-align="right" :label="texts.tabAdjust.adjutantCustomImg" label-for="adjutantCustomImg">
@@ -240,66 +320,91 @@
 				   </b-row>
 			  </b-card> -->
 
-			  <b-card title-tag="h5" border-variant="light" :title="$t('tabAdjust.background')">
-				<b-row>
-				  <b-col cols=5>
-					<b-form-group label-cols="3" label-align="right" :label="$t('tabAdjust.backgroundOffsetX')" label-for="backgroundOffsetX">
-					  <b-input-group>
-						<b-input-group-prepend>
-						  <b-btn variant="outline-danger" @click="selected.backgroundOffsetX-=5">-</b-btn>
-						</b-input-group-prepend>
-						<b-form-input id="backgroundOffsetX" type="number" placeholder="0" step="1" v-model.number="selected.backgroundOffsetX" @input="debounceInput"></b-form-input>
-						<b-input-group-append>
-						  <b-btn variant="outline-success" @click="selected.backgroundOffsetX+=parseInt(5)">+</b-btn>
-						</b-input-group-append> 
-					  </b-input-group>
-					</b-form-group>
-				  </b-col>
-				  <b-col cols=5>
-					<b-form-group label-cols="3" label-align="right" :label="$t('tabAdjust.backgroundOffsetY')" label-for="backgroundOffsetY">
-					  <b-input-group>
-						<b-input-group-prepend>
-						  <b-btn variant="outline-danger" @click="selected.backgroundOffsetY-=5">-</b-btn>
-						</b-input-group-prepend>
-						<b-form-input id="backgroundOffsetY" type="number" placeholder="0" step="1" v-model.number="selected.backgroundOffsetY" @input="debounceInput"></b-form-input>
-						<b-input-group-append>
-						  <b-btn variant="outline-success" @click="selected.backgroundOffsetY+=parseInt(5)">+</b-btn>
-						</b-input-group-append> 
-					  </b-input-group>
-					</b-form-group>
-				  </b-col>
-				</b-row>
-				<b-row>
-				  <b-col cols=5>
-					<b-form-group label-cols="3" label-align="right" :label="$t('tabAdjust.backgroundScaleFactor')" label-for="backgroundScaleFactor">
-					  <b-input-group>
-						<b-input-group-prepend>
-						  <b-btn variant="outline-danger" @click="selected.backgroundScaleFactor=(parseFloat(selected.backgroundScaleFactor)-0.05).toFixed(2)">-</b-btn>
-						</b-input-group-prepend>
-						<b-form-input id="backgroundScaleFactor" type="number" placeholder="1" step="0.01" v-model.number="selected.backgroundScaleFactor" @input="debounceInput"></b-form-input>
-						<b-input-group-append>
-						  <b-btn variant="outline-success" @click="selected.backgroundScaleFactor=(parseFloat(selected.backgroundScaleFactor)+0.05).toFixed(2)">+</b-btn>
-						</b-input-group-append> 
-					  </b-input-group>
-					</b-form-group>
-				  </b-col>
-				  <b-col cols=5>
-					<b-form-group label-cols="3" label-align="right" :label="$t('tabAdjust.backgroundAplha')" label-for="backgroundAlpha">
-					  <b-input-group>
-						<b-input-group-prepend>
-						  <b-btn variant="outline-danger" @click="selected.backgroundAlpha=(parseFloat(selected.backgroundAlpha)-0.05).toFixed(2)">-</b-btn>
-						</b-input-group-prepend>
-						<b-form-input id="backgroundAlpha" type="number" placeholder="0.7" step="0.01" v-model.number="selected.backgroundAlpha" @input="debounceInput"></b-form-input>
-						<b-input-group-append>
-						  <b-btn variant="outline-success" @click="selected.backgroundAlpha=(parseFloat(selected.backgroundAlpha)+0.05).toFixed(2)">+</b-btn>
-						</b-input-group-append> 
-					  </b-input-group>
-					</b-form-group>
-				  </b-col>
-				</b-row>
-			  </b-card>
-			  
-			  <!-- <b-card class="d-none" title-tag="h5" border-variant="light" :title="texts.tabAdjust.backgroundCustom">
+						<b-card title-tag="h5" border-variant="light" :title="$t('tabAdjust.background')">
+							<b-row>
+								<b-col cols=5>
+									<b-form-group label-cols="3" label-align="right"
+										:label="$t('tabAdjust.backgroundOffsetX')" label-for="backgroundOffsetX">
+										<b-input-group>
+											<b-input-group-prepend>
+												<b-btn variant="outline-danger" @click="selected.backgroundOffsetX-=5">-
+												</b-btn>
+											</b-input-group-prepend>
+											<b-form-input id="backgroundOffsetX" type="number" placeholder="0" step="1"
+												v-model.number="selected.backgroundOffsetX" @input="debounceInput">
+											</b-form-input>
+											<b-input-group-append>
+												<b-btn variant="outline-success"
+													@click="selected.backgroundOffsetX+=parseInt(5)">+</b-btn>
+											</b-input-group-append>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col cols=5>
+									<b-form-group label-cols="3" label-align="right"
+										:label="$t('tabAdjust.backgroundOffsetY')" label-for="backgroundOffsetY">
+										<b-input-group>
+											<b-input-group-prepend>
+												<b-btn variant="outline-danger" @click="selected.backgroundOffsetY-=5">-
+												</b-btn>
+											</b-input-group-prepend>
+											<b-form-input id="backgroundOffsetY" type="number" placeholder="0" step="1"
+												v-model.number="selected.backgroundOffsetY" @input="debounceInput">
+											</b-form-input>
+											<b-input-group-append>
+												<b-btn variant="outline-success"
+													@click="selected.backgroundOffsetY+=parseInt(5)">+</b-btn>
+											</b-input-group-append>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							<b-row>
+								<b-col cols=5>
+									<b-form-group label-cols="3" label-align="right"
+										:label="$t('tabAdjust.backgroundScaleFactor')"
+										label-for="backgroundScaleFactor">
+										<b-input-group>
+											<b-input-group-prepend>
+												<b-btn variant="outline-danger"
+													@click="selected.backgroundScaleFactor=(parseFloat(selected.backgroundScaleFactor)-0.05).toFixed(2)">
+													-</b-btn>
+											</b-input-group-prepend>
+											<b-form-input id="backgroundScaleFactor" type="number" placeholder="1"
+												step="0.01" v-model.number="selected.backgroundScaleFactor"
+												@input="debounceInput"></b-form-input>
+											<b-input-group-append>
+												<b-btn variant="outline-success"
+													@click="selected.backgroundScaleFactor=(parseFloat(selected.backgroundScaleFactor)+0.05).toFixed(2)">
+													+</b-btn>
+											</b-input-group-append>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col cols=5>
+									<b-form-group label-cols="3" label-align="right"
+										:label="$t('tabAdjust.backgroundAplha')" label-for="backgroundAlpha">
+										<b-input-group>
+											<b-input-group-prepend>
+												<b-btn variant="outline-danger"
+													@click="selected.backgroundAlpha=(parseFloat(selected.backgroundAlpha)-0.05).toFixed(2)">
+													-</b-btn>
+											</b-input-group-prepend>
+											<b-form-input id="backgroundAlpha" type="number" placeholder="0.7"
+												step="0.01" v-model.number="selected.backgroundAlpha"
+												@input="debounceInput"></b-form-input>
+											<b-input-group-append>
+												<b-btn variant="outline-success"
+													@click="selected.backgroundAlpha=(parseFloat(selected.backgroundAlpha)+0.05).toFixed(2)">
+													+</b-btn>
+											</b-input-group-append>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+						</b-card>
+
+						<!-- <b-card class="d-none" title-tag="h5" border-variant="light" :title="texts.tabAdjust.backgroundCustom">
 				   <b-row>
 					 <b-col cols=6>
 					   <b-form-group class="align-middle" label-cols="3" label-align="right" :label="texts.tabAdjust.backgroundCustomImg" label-for="backgroundCustomImg">
@@ -364,7 +469,7 @@
 				   </b-row>
 			  </b-card> -->
 
-			  <!--<b-card title-tag="h5" border-variant="light" :title="texts.tabAdjust.other">
+						<!--<b-card title-tag="h5" border-variant="light" :title="texts.tabAdjust.other">
 				  <b-row>
 					<b-form-group label-cols="4" label-align="right" :label="texts.tabAdjust.gunLiteBackgroundAlpha" label-for="gunLiteBackgroundAlpha">
 					  <b-input-group>
@@ -379,18 +484,22 @@
 					</b-form-group>
 				  </b-row>
 			  </b-card>-->
-			  
-			</b-tab>
-		  </b-tabs>
-		</div>
 
-		<div class="mt-3 py-2 d-flex border-top justify-content-center" id="webStatistics">{{ $t('ui.visitedCount') }}:&nbsp;<b-link :href="sitePvChartUrl">{{pv}}</b-link></div>
-		<b-tooltip target="langs" triggers="hover"></b-tooltip>
-	  </b-container>
-	  <div v-cloak class="d-flex fixed-bottom justify-content-end mr-3 mb-1"><b-button id="toTop" class="my-1" variant="primary" @click="scrollToTop(300)">{{ $t('btnToTop') }}</b-button></div>
+					</b-tab>
+				</b-tabs>
+			</div>
+
+			<div class="mt-3 py-2 d-flex border-top justify-content-center" id="webStatistics">
+				{{ $t('ui.visitedCount') }}:&nbsp;<b-link :href="sitePvChartUrl">{{pv}}</b-link>
+			</div>
+			<b-tooltip target="langs" triggers="hover"></b-tooltip>
+			<div v-cloak id="toTop">
+				<b-button variant="primary" @click="scrollToTop(300)"><i
+					class="fa fa-arrow-up"></i>&nbsp;{{ $t('btnToTop') }}</b-button>
+			</div>
+		</b-container>
 	</div>
 	<script src="https://www.fc4soda.moe/kis3/kis3.js"></script>
-  </body>
+</body>
+
 </html>
-
-

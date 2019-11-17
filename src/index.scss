@@ -44,14 +44,10 @@ $green:     #859900;
 $bg:        $base3;
 $fg:        $base02;
 
-
-//[v-cloak] { display:none !important; }
-
 [v-cloak] > * { display:none }
 
 body {
-  /*background-color: $bg;
-  color: $fg;
+  /*
   @include font-content;
  */
 }
@@ -67,7 +63,7 @@ label.btn {
   max-width: 3rem;
   &:hover {
 	border: 1px solid $blue;
-	box-shadow: 1px 1px $blue;
+	box-shadow: 2px 1px $blue;
   }
   img {
 	width: 3rem;
@@ -86,7 +82,7 @@ label.btn {
 
 .gunLiteSelected {
   border: 1px solid $red;
-  box-shadow: 1px 1px $red;
+  box-shadow: 2px 1px $red;
 }
 
 .gunLiteDamaged { 
@@ -98,4 +94,15 @@ label.btn {
   padding: 0 .1rem;
   font-size: 1rem;
   line-height: normal;
+}
+
+#toTop {
+  position: fixed;
+  bottom: 1rem;
+  right: 1.5rem;
+  //opacity: .7;
+  z-index: 10;
+  &:hover{
+    opacity: 1;
+  }
 }

@@ -25,22 +25,25 @@ const sitePvUrl = SITE_PV_URL, sitePvChartUrl = SITE_PV_CHART_URL;
 
 const images = importAll(require.context('../static/img/', true, /\.(png|jpe?g|svg)$/, 'sync'));
 
-//const STORE_KEY = 'selected', STORE_KEY_MOD = 'selectedMod', STORE_KEY_DEBOUNCE = 'selectedDebounce', STORE_KEY_LANG = 'lang', STORE_KEY_RATE = 'selectedRate';
+const STORE_KEY_SELECTED = 'selected', STORE_KEY_MOD = 'selectedMod', STORE_KEY_DEBOUNCE = 'selectedDebounce',
+	  STORE_KEY_POSTER = 'selectedPoster', STORE_KEY_LANG = 'lang', STORE_KEY_RATE = 'selectedRate', STORE_KEY_SERVER = 'server';
 
-/*function store(key, value){
-  localStorage.setItem(key, JSON.stringify(value));
-  }
+const b64toChar1 = (b64Data) => {
+	return atob(b64Data.split(',')[1]);
+}
 
-  function restore(key){
-  let r = localStorage.getItem(key);
-  if(!r){
-  return r;
-  }
-  return JSON.parse(r);
-  }*/
-
-const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
-	const byteCharacters = atob(b64Data.split(',')[1]);
+const b64toChar2 = (b64Data) => {
+	return decodeURIComponent(b64Data.split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+const encodeStr = (str) => {
+	return encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+        function toSolidBytes(match, p1) {
+            return String.fromCharCode('0x' + p1);
+    });
+}
+const b64CharToByteArray = (byteCharacters, sliceSize=512) => {
 	const byteArrays = [];
 
 	for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -55,16 +58,15 @@ const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
 		byteArrays.push(byteArray);
 	}
 
-	const blob = new Blob(byteArrays, {type: contentType});
-	return blob;
+	return byteArrays;
 }
 
 var saveData = (function () {
 	var a = document.createElement("a");
 	document.body.appendChild(a);
 	a.style = "display: none";
-	return function (b64Data, contentType, fileName) {
-		var blob = b64toBlob(b64Data, contentType),
+	return function (byteArrays, contentType, fileName) {
+		var blob = new Blob(byteArrays, {type: contentType}),
 			url = window.URL.createObjectURL(blob);
 		a.href = url;
 		a.download = fileName;
@@ -194,7 +196,8 @@ const star6 = '#ff4d4d',
 let userAvatarSize = 116, userAvatarX = 40, userAvatarY = 44,
 	font = 'ubuntu,noto,"WenQuanYi Micro Hei Regular",sans-serif';
 // TODO change px to ratio
-var now = new Date().toISOString().split('T')[0] + "   Girls' Frontline";
+var now = new Date().toISOString().split('T')[0],
+	logo = "Girls' Frontline";
 var UIData = {
 	"mod":{
 		"background":{
@@ -262,6 +265,16 @@ var UIData = {
 		},
 		"now": {
 			"x": 5,
+			"y": 217,
+			"font": "0.65rem "+font,
+			"strokeStyle": "grey",
+			"lineWidth": 0,
+			"fillStyle": "white",
+			"align": 'left',
+			"baseline": 'bottom'
+		},
+		"logo": {
+			"x": 65,
 			"y": 217,
 			"font": "0.65rem "+font,
 			"strokeStyle": "grey",
@@ -374,6 +387,16 @@ var UIData = {
 			"align": 'left',
 			"baseline": 'bottom'
 		},
+		"logo": {
+			"x": 65,
+			"y": 510-3,
+			"font": "0.65rem "+font,
+			"strokeStyle": "grey",
+			"lineWidth": 0,
+			"fillStyle": "white",
+			"align": 'left',
+			"baseline": 'bottom'
+		},
 		"collectionRate": {
 			"x": 845,
 			"y": 510-20,
@@ -429,6 +452,7 @@ var selected = {
 	"adjutantCustomOffsetY": 0,
 	"adjutantCustomScaleFactor": 1,
 	"now": now,
+	"logo": logo,
 	"backgroundOffsetX": 0,
 	"backgroundOffsetY": 0,
 	"backgroundScaleFactor": 1,
@@ -456,7 +480,6 @@ var selectedDebounce = {
 var currentTab = 0;
 var currentCanvas = "mod";
 //var tabList = ["general", "team", "mod", "poster", "background", "adjust"];
-var now = new Date().toISOString().split('T')[0] + "   Girls' Frontline";
 var selectedRate = {
 	"mod":{
 		"collectionRate":{
@@ -794,7 +817,7 @@ function component(){
 		},
 		data (){
 			return {
-				checkedProxy: false
+				checkedProxy: []
 			}
 		},
 		computed: {
@@ -826,6 +849,10 @@ function component(){
 				} else{
 					this.collection_rate[this.gun_type]++;
 				}
+				this.$emit('input', this.checkedProxy)
+			},
+			select: function(val){
+				this.checkedProxy = val;
 				this.$emit('input', this.checkedProxy)
 			}
 		},
@@ -1031,6 +1058,8 @@ v-on:change="onChange"
 			positionData: {"mod": {},"poster": {}},
 			pv: 0,
 			sitePvChartUrl: sitePvChartUrl, 
+			isPrd: isPrd,
+			restored: false,
 		},
 		computed: {},
 		components: {
@@ -1038,20 +1067,24 @@ v-on:change="onChange"
 		watch: {
 			currentCanvas: {
 				handler(){
+					console.log('watch currentCanvas')
 					this.drawCanvas();
 				}
 			},
 			selected: {
 				deep: true,
 				handler(){
+					console.log('watch selected')
 					this.drawCanvas();
 				}
 			},
 			selectedMod: {
 				deep: true,
 				handler(){
+					console.log('(watch selectedMod)')
+					this.selectedRate['mod'].collectionRate.got = this.selectedMod.guns.length;
 					if(this.currentCanvas=='mod'){
-						this.selectedRate['mod'].collectionRate.got = this.selectedMod.guns.length;
+						console.log('watch selectedMod called')
 						this.drawCanvas();
 					}
 				}
@@ -1059,8 +1092,10 @@ v-on:change="onChange"
 			selectedPoster: {
 				deep: true,
 				handler(){
+					console.log('(watch selectedPoster)')
+					this.selectedRate['poster'].collectionRate.got = this.selectedPoster.guns.length;
 					if(this.currentCanvas=='poster'){
-						this.selectedRate['poster'].collectionRate.got = this.selectedPoster.guns.length;
+						console.log('watch selectedPoster called')
 						this.drawCanvas();
 					}
 				}
@@ -1068,6 +1103,7 @@ v-on:change="onChange"
 			lang: {
 				immediate: true,
 				handler(){
+					console.log('watch lang')
 					this.$i18n.locale = this.lang
 					//this.title.lang = this.lang
 					//this.texts = textData[this.lang];
@@ -1076,6 +1112,7 @@ v-on:change="onChange"
 			server: {
 				immediate: true,
 				handler(){
+					console.log('watch server')
 					this.positionData = {
 						"mod": {},
 						"poster": {}
@@ -1099,36 +1136,109 @@ v-on:change="onChange"
 		},
 		mounted: function () {
 			this.$nextTick(function () {
+				console.log('mounted nextTick')
 				this.drawCanvas();
 			})
 		},
 		methods: {
 			debounceInput: _.debounce(function(e){
+				console.log('methods debounceInput')
 				this.drawCanvas()
 			}, 500),
+			store: function(key, value){
+				localStorage.setItem(key, JSON.stringify(value))
+			},
+			restore: function(key){
+				this.msg = this.$i18n.messages[this.lang].message.generatePicture;
+				if(localStorage.getItem(key)){
+					try {
+						return JSON.parse(localStorage.getItem(key))
+					} catch(e){
+						localStorage.removeItem(key)
+					}
+				}
+				return null;
+			},
 			storeAll: function(){
-				store(STORE_KEY, this.selected)
-				//console.log('STORE')
-				//console.log('selected', selected)
-				store(STORE_KEY_MOD, this.selectedMod)
-				store(STORE_KEY_DEBOUNCE, this.selectedDebounce)
-				store(STORE_KEY_RATE, this.selectedRate)
-				store(STORE_KEY_LANG, this.lang)
+				this.msg = this.$i18n.messages[this.lang].message.saveCfg;
+				console.log('STORE')
+				this.store(STORE_KEY_SELECTED, this.selected)
+				this.store(STORE_KEY_MOD, this.selectedMod)
+				this.store(STORE_KEY_POSTER, this.selectedPoster)
+				this.store(STORE_KEY_DEBOUNCE, this.selectedDebounce)
+				this.store(STORE_KEY_RATE, this.selectedRate)
+				this.store(STORE_KEY_LANG, this.lang)
+				this.store(STORE_KEY_SERVER, this.server)
+				this.msg = this.$i18n.messages[this.lang].message.saveCfgDone;
 			},
 			restoreAll: function (){
-				let s = restore(STORE_KEY), smod = restore(STORE_KEY_MOD),
-					sdebounce = restore(STORE_KEY_DEBOUNCE), l = restore(STORE_KEY_LANG);
-				this.selected = s ? s : this.selected;
-				this.selectedMod = smod ? smod : this.selectedMod;
-				this.selectedDebounce = sdebounce ? sdebounce : this.selectedDebounce;
+				console.log('RESTORE')
+				this.msg = this.$i18n.messages[this.lang].message.loadCfg;
+				this.restored = true;
+				let s = this.restore(STORE_KEY_SELECTED), smod = this.restore(STORE_KEY_MOD), sposter = this.restore(STORE_KEY_POSTER),
+					sdebounce = this.restore(STORE_KEY_DEBOUNCE), srate = this.restore(STORE_KEY_RATE), l = this.restore(STORE_KEY_LANG),
+					server = this.restore(STORE_KEY_SERVER);
+				Object.assign(this.selected, s ? s : this.selected);
+				Object.assign(this.selectedMod, smod ? smod : this.selectedMod);
+				Object.assign(this.selectedPoster, sposter ? sposter : this.selectedPoster);
+				Object.assign(this.selectedDebounce, sdebounce ? sdebounce : this.selectedDebounce);
+				Object.assign(this.selectedRate, srate ? srate : this.selectedRate);
 				this.lang = l ? l : this.lang;
-				//console.log('RESTORE')
-				//console.log('selected', selected)
-				this.drawCanvas();
+				this.server = server ? server : this.server;
+				this.$refs.mod_055m[0].select(this.selectedMod.guns);
+				this.restored = false;
+				this.msg = this.$i18n.messages[this.lang].message.loadCfgDone;
+				alert(this.$i18n.messages[this.lang].message.loadCfgTime + ": " + this.selected.now);
+				this.selected.now = now;
+				console.log('END RESTORE')
+			},
+			exportJSON: function(){
+				let data = {};
+				data[STORE_KEY_SELECTED] = this.selected;
+				data[STORE_KEY_MOD] = this.selectedMod;
+				data[STORE_KEY_POSTER] = this.selectedPoster;
+				data[STORE_KEY_DEBOUNCE] = this.selectedDebounce;
+				data[STORE_KEY_RATE] = this.selectedRate;
+				data[STORE_KEY_LANG] = this.lang;
+				data[STORE_KEY_SERVER] = this.server;
+				let v1 = JSON.stringify(data);
+				let v4 = b64CharToByteArray(encodeStr(v1))
+				saveData(v4, 'application/json', 'gfdata.json');
+			},
+			importJSON: function(event){
+				console.log('importJSON')
+				this.msg = this.$i18n.messages[this.lang].message.loadCfg;
+				var input = event.target;
+				if(input.files && input.files[0]){
+					var reader = new FileReader();
+					reader.onload = (e) => {
+						let data = JSON.parse(b64toChar2(b64toChar1(e.target.result)));
+						this.restored = true;
+						let s = data[STORE_KEY_SELECTED], smod = data[STORE_KEY_MOD], sposter = data[STORE_KEY_POSTER],
+							sdebounce = data[STORE_KEY_DEBOUNCE], srate = data[STORE_KEY_RATE], l = data[STORE_KEY_LANG],
+							server = data[STORE_KEY_SERVER];
+						Object.assign(this.selected, s ? s : this.selected);
+						Object.assign(this.selectedMod, smod ? smod : this.selectedMod);
+						Object.assign(this.selectedPoster, sposter ? sposter : this.selectedPoster);
+						Object.assign(this.selectedDebounce, sdebounce ? sdebounce : this.selectedDebounce);
+						Object.assign(this.selectedRate, srate ? srate : this.selectedRate);
+						this.lang = l ? l : this.lang;
+						this.server = server ? server : this.server;
+						this.$refs.mod_055m[0].select(this.selectedMod.guns);
+						this.restored = false;
+						alert(this.$i18n.messages[this.lang].message.loadCfgTime + ": " + this.selected.now);
+						this.selected.now = now;
+					}
+					reader.readAsDataURL(input.files[0]);
+				}
+				this.msg = this.$i18n.messages[this.lang].message.loadCfgDone;
+				console.log('END importJSON')
 			},
 			exportPNG: function(){
+				this.msg = this.$i18n.messages[this.lang].message.generatePicture;
 				let b64 = document.getElementById('resultCanvas').toDataURL("image/png");
-				saveData(b64, 'image/png', 'badge.png');
+				saveData(b64CharToByteArray(b64toChar1(b64)), 'image/png', 'badge.png');
+				this.msg = this.$i18n.messages[this.lang].message.generateDone;
 			},
 			img2base64: function(event){
 				var input = event.target;
@@ -1167,6 +1277,10 @@ v-on:change="onChange"
 				window.requestAnimationFrame(step);
 			},
 			drawCanvas: function(){
+				console.log('this.restored', this.restored)
+				if(this.restored){
+					return;
+				}
 				console.log('drawCanvas')
 				this.msg = this.$i18n.messages[this.lang].message.loadPictures;
 				var can = document.getElementById('resultCanvas');
@@ -1190,7 +1304,7 @@ v-on:change="onChange"
 				background.onload = adjutant.onload = counter;
 				let backImg = genImgName(selected["background"], 'back');
 				background.src = backImg;
-				let adjutantImg = genImgName(selected.userAdjutant, 'tachie');
+				let adjutantImg = genImgName(this.selected.userAdjutant, 'tachie');
 				adjutant.src = adjutantImg;
 
 				let _this = this;
@@ -1198,9 +1312,9 @@ v-on:change="onChange"
 
 				var selectedCanvas;
 				if(_this.currentCanvas=='mod'){
-					selectedCanvas = selectedMod;
+					selectedCanvas = this.selectedMod;
 				}else if(_this.currentCanvas=='poster'){
-					selectedCanvas = selectedPoster;
+					selectedCanvas = this.selectedPoster;
 				}
 
 				function counter(){
@@ -1213,16 +1327,16 @@ v-on:change="onChange"
 
 				
 				function drawImages(){
-					let c, c2;
+					let c;
 					c = uiData["background"];
 					ctx.clearRect(0, 0, can.width, can.height);
-					ctx.globalAlpha = ( selected.backgroundAlpha != undefined ? selected.backgroundAlpha : c.alpha )
+					ctx.globalAlpha = ( _this.selected.backgroundAlpha != undefined ? _this.selected.backgroundAlpha : c.alpha )
 					//ctx.drawImage(background, c.x, c.y, c.sw, c.sh, 0, 0, c.w, c.h);
-					ctx.drawImage(background, c.x+selected.backgroundOffsetX, c.y+selected.backgroundOffsetY, c.sw*selected.backgroundScaleFactor, c.sh*selected.backgroundScaleFactor, 0, 0, c.w, c.h);
+					ctx.drawImage(background, c.x+_this.selected.backgroundOffsetX, c.y+_this.selected.backgroundOffsetY, c.sw*_this.selected.backgroundScaleFactor, c.sh*_this.selected.backgroundScaleFactor, 0, 0, c.w, c.h);
 					ctx.globalAlpha = 1;
 					
 					c = uiData["adjutant"];
-					ctx.drawImage(adjutant, 0, 0, c.w-selected.adjutantOffsetY, c.h-selected.adjutantOffsetY, c.x+selected.adjutantOffsetX, c.y+selected.adjutantOffsetY, (c.w-selected.adjutantOffsetY)*selected.adjutantScaleFactor, (c.h-selected.adjutantOffsetY)*selected.adjutantScaleFactor);
+					ctx.drawImage(adjutant, 0, 0, c.w-_this.selected.adjutantOffsetY, c.h-_this.selected.adjutantOffsetY, c.x+_this.selected.adjutantOffsetX, c.y+_this.selected.adjutantOffsetY, (c.w-_this.selected.adjutantOffsetY)*_this.selected.adjutantScaleFactor, (c.h-_this.selected.adjutantOffsetY)*_this.selected.adjutantScaleFactor);
 
 					c = uiData["userAvatar"];
 					if(c){
@@ -1234,23 +1348,26 @@ v-on:change="onChange"
 					drawGuns(ctx, position, R, can, selectedCanvas);
 					
 					c = uiData["collectionRateBox"]
-					drawBox(ctx, c.x, c.y, c.w, c.h, c.lineWidth, selectedRate[s]['collectionRate']['got']/position.sum)
+					drawBox(ctx, c.x, c.y, c.w, c.h, c.lineWidth, _this.selectedRate[s]['collectionRate']['got']/position.sum)
 
 					c = uiData["userName"]
-					drawText(ctx, selectedDebounce.userName, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
+					drawText(ctx, _this.selectedDebounce.userName, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
 					
 					c = uiData["userLevel"]
-					drawText(ctx, 'Lv. '+selectedDebounce.userLevel, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
+					drawText(ctx, 'Lv. '+_this.selectedDebounce.userLevel, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
 
 					c = uiData["userServer"]
-					let userServer = selectedDebounce.userServerCustom == '' ? selected.userServer : selectedDebounce.userServerCustom;
+					let userServer = _this.selectedDebounce.userServerCustom == '' ? _this.selected.userServer : _this.selectedDebounce.userServerCustom;
 					drawText(ctx, userServer, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
 
 					c = uiData["collectionRate"]
-					drawText(ctx, percentCalc(selectedRate[s]['collectionRate']['got'], position.sum), c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
+					drawText(ctx, percentCalc(_this.selectedRate[s]['collectionRate']['got'], position.sum), c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
 					
 					c = uiData["now"]
-					drawText(ctx, selected.now, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
+					drawText(ctx, _this.selected.now, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
+
+					c = uiData["logo"]
+					drawText(ctx, _this.selected.logo, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
 				}
 
 				function drawGuns(ctx, position, R, can, selected){
@@ -1258,13 +1375,13 @@ v-on:change="onChange"
 						ui = UIData[s];
 					let c = ui.guns.typeText, c2 = ui.guns.numText;
 					for(let i in position.text){
-						let selectedNum = selectedRate[s]['collectionRate'][i];
+						let selectedNum = _this.selectedRate[s]['collectionRate'][i];
 						let name = position.text[i].name, num = position.text[i].num;
 						drawText(ctx, name.text, name.x+c.offset, name.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
 						drawText(ctx, selectedNum+'/'+num.text, num.x+c2.offset, num.y, c2.font, c2.fillStyle, c2.lineWidth, c2.strokeStyle, c2.align, c2.baseline);
 					}
 
-					let imgList = [], callbackList = [];
+					let callbackList = [];
 					let count = 0;
 					for(let no in position.guns){
 						drawGunBlank(ctx, position.guns[no], R);
@@ -1278,8 +1395,6 @@ v-on:change="onChange"
 							callbackList.push(fun);
 						}
 					}
-					let totalCount = count;
-
 					var __this = _this;
 
 					function counter(){

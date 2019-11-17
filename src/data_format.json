@@ -202,6 +202,13 @@
                     "no": "104_3103",
                     "img": "G36C_3103",
                     "imgDamaged": ""
+                },
+                {
+                    "name": "G36C_3802",
+                    "cnname": "灼眼的G36C",
+                    "no": "104_3802",
+                    "img": "G36C_3802",
+                    "imgDamaged": ""
                 }
             ]
         },
@@ -589,7 +596,15 @@
                     "imgDamaged": "PSG1_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "PSG1_3808",
+                    "cnname": "魅影突击",
+                    "no": "117_3808",
+                    "img": "PSG1_3808",
+                    "imgDamaged": ""
+                }
+			]
         },
         "118": {
             "type": "AR",
@@ -1806,7 +1821,15 @@
                     "imgDamaged": "97typeS_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "97typeS_3807",
+                    "cnname": "奇谋妙策九七计",
+                    "no": "161_3807",
+                    "img": "97typeS_3807",
+                    "imgDamaged": ""
+                }
+			]
         },
         "162": {
             "type": "SG",
@@ -3455,7 +3478,15 @@
                     "imgDamaged": "CETME556_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "CETME556_3809",
+                    "cnname": "暗夜炼狱刹",
+                    "no": "223_3809",
+                    "img": "CETME556_3809",
+                    "imgDamaged": ""
+                }
+			]
         },
         "224": {
             "type": "SMG",
@@ -3582,7 +3613,15 @@
                     "imgDamaged": "M870P_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "M870P_3803",
+                    "cnname": "南瓜堡垒",
+                    "no": "228_3803",
+                    "img": "M870P_3803",
+                    "imgDamaged": ""
+                }
+			]
         },
         "230": {
             "type": "RF",
@@ -4058,6 +4097,13 @@
                     "no": "252_3405",
                     "img": "KSVK_3405",
                     "imgDamaged": ""
+                },
+                {
+                    "name": "KSVK_3805",
+                    "cnname": "月暗面漫步",
+                    "no": "252_3805",
+                    "img": "KSVK_3805",
+                    "imgDamaged": ""
                 }
             ]
         },
@@ -4240,7 +4286,15 @@
                     "imgDamaged": "QBU88_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "QBU88_3801",
+                    "cnname": "拦路劫糖!",
+                    "no": "261_3801",
+                    "img": "QBU88_3801",
+                    "imgDamaged": ""
+                }
+			]
         },
         "262": {
             "type": "AR",
@@ -6824,6 +6878,13 @@
                     "no": "088_1304",
                     "img": "MG3_1304",
                     "imgDamaged": ""
+                },
+                {
+                    "name": "MG3_3806",
+                    "cnname": "满月请睁眼",
+                    "no": "088_3806",
+                    "img": "MG3_3806",
+                    "imgDamaged": ""
                 }
             ]
         },
@@ -7771,6 +7832,26 @@
                     "imgDamaged": ""
                 }
             ]
+        },
+        "278": {
+            "type": "SG",
+			"enexist": false,
+			"jpexist": false,
+            "name": "Six12",
+            "cnname": "Six12",
+            "enname": "Six12",
+            "stars": 3,
+            "imgs": [
+                {
+                    "name": "Six12",
+                    "cnname": "Six12",
+                    "enname": "Six12",
+                    "no": "278",
+                    "img": "Six12",
+                    "imgDamaged": ""
+                }
+            ],
+            "skins": []
         }
     },
     "modGun": [
