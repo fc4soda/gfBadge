@@ -11,9 +11,9 @@
 
 <body>
 
-	<div id="loading" v-if="show" class="text-center d-flex justify-content-center">
-		<div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>
-		<strong class="d-inline-block">Loading...</strong>
+	<div id="loading" v-if="show" class="center-div">
+		<div class="spinner-grow" style="position: relative; width: 3rem; height: 3rem;" role="status"></div>
+		<strong class="d-inline-block">Loading</strong>
 	</div>
 
 	<div v-cloak id="app">
@@ -154,7 +154,7 @@
 					</b-tab>
 					<b-tab :title="$t('tabMod.title')">
 						<template v-slot:title>
-							<i class="fa fa-dice-d6"></i>&nbsp;{{$t('tabMod.title')}}
+							<i class="fa fa-cube"></i>&nbsp;{{$t('tabMod.title')}}
 						</template>
 						<!-- <gun-checkall :guns='initData.modGunList' v-model="selected.mod.coll.Allchecked" :selected='selected.mod.guns'></gun-checkall> -->
 						<div class="mb-3" v-for="(guns, type) in initData.modGunList" :key="type">
@@ -490,9 +490,10 @@
 			</div>
 
 			<div class="mt-3 py-2 d-flex border-top justify-content-center" id="webStatistics">
-				{{ $t('ui.visitedCount') }}:&nbsp;<b-link :href="sitePvChartUrl">{{pv}}</b-link>
+				<div>{{ $t('ui.visitedCount') }}:&nbsp;<b-link :href="sitePvChartUrl">{{pv}}</b-link></div>
 			</div>
 			<b-tooltip target="langs" triggers="hover"></b-tooltip>
+			<b-toast id="toast" title="BootstrapVue" static no-auto-hide></b-toast>
 			<div v-cloak id="toTop">
 				<b-button variant="primary" @click="scrollToTop(300)"><i
 					class="fa fa-arrow-up"></i>&nbsp;{{ $t('btnToTop') }}</b-button>

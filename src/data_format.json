@@ -7852,6 +7852,82 @@
                 }
             ],
             "skins": []
+        },
+        "283": {
+            "type": "SG",
+			"enexist": false,
+			"jpexist": false,
+            "name": "Liberator",
+            "cnname": "解放者",
+            "enname": "Liberator",
+            "stars": 4,
+            "imgs": [
+                {
+                    "name": "Liberator",
+                    "cnname": "Liberator",
+                    "enname": "Liberator",
+                    "no": "283",
+                    "img": "Liberator"
+                }
+            ],
+            "skins": []
+        },
+        "282": {
+            "type": "SG",
+			"enexist": false,
+			"jpexist": false,
+            "name": "DP12",
+            "cnname": "DP-12",
+            "enname": "DP-12",
+            "stars": 5,
+            "imgs": [
+                {
+                    "name": "DP12",
+                    "cnname": "DP-12",
+                    "enname": "DP-12",
+                    "no": "282",
+                    "img": "DP12"
+                }
+            ],
+            "skins": []
+        },
+        "281": {
+            "type": "SG",
+			"enexist": false,
+			"jpexist": false,
+            "name": "HKCAWS",
+            "cnname": "CAWS",
+            "enname": "CAWS",
+            "stars": 5,
+            "imgs": [
+                {
+                    "name": "HKCAWS",
+                    "cnname": "CAWS",
+                    "enname": "CAWS",
+                    "no": "281",
+                    "img": "HKCAWS"
+                }
+            ],
+            "skins": []
+        },
+        "279": {
+            "type": "AR",
+			"enexist": false,
+			"jpexist": false,
+            "name": "INSAS",
+            "cnname": "INSAS",
+            "enname": "INSAS",
+            "stars": 3,
+            "imgs": [
+                {
+                    "name": "INSAS",
+                    "cnname": "INSAS",
+                    "enname": "INSAS",
+                    "no": "279",
+                    "img": "INSAS"
+                }
+            ],
+            "skins": []
         }
     },
     "modGun": [
@@ -7887,7 +7963,7 @@
         "10": {
             "name": "BG-Bar",
             "cnname": "咖啡厅",
-            "enname": "咖啡厅",
+            "enname": "Café",
             "w": 1024,
             "h": 1024,
             "img": "BG-Bar"
@@ -7919,7 +7995,7 @@
         "14": {
             "name": "2019summer_3",
             "cnname": "裂变链接",
-            "enname": "裂变链接",
+            "enname": "Shattered Connexion",
             "w": 1024,
             "h": 1024,
             "img": "2019summer_3"
@@ -7927,7 +8003,7 @@
         "15": {
             "name": "2019summer_6",
             "cnname": "花园",
-            "enname": "花园",
+            "enname": "Garden",
             "w": 1024,
             "h": 1024,
             "img": "2019summer_6"

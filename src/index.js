@@ -194,7 +194,10 @@ const star6 = '#ff4d4d',
 	  star2 = 'white',
 	  starEx = '#ccb3ff';
 let userAvatarSize = 116, userAvatarX = 40, userAvatarY = 44,
-	font = 'ubuntu,noto,"WenQuanYi Micro Hei Regular",sans-serif';
+	font = 'Baskerville, Georgia, "Liberation Serif", "Kaiti SC",\
+		STKaiti, "AR PL UKai CN", "AR PL UKai HK", "AR PL UKai TW",\
+		"AR PL UKai TW MBE", "AR PL KaitiM GB", KaiTi, KaiTi_GB2312,\
+		DFKai-SB, "TW\-Kai", serif';
 // TODO change px to ratio
 var now = new Date().toISOString().split('T')[0],
 	logo = "Girls' Frontline";
@@ -1057,7 +1060,7 @@ v-on:change="onChange"
 			msg: '',
 			positionData: {"mod": {},"poster": {}},
 			pv: 0,
-			sitePvChartUrl: sitePvChartUrl, 
+			sitePvChartUrl: sitePvChartUrl,
 			isPrd: isPrd,
 			restored: false,
 		},
@@ -1067,24 +1070,20 @@ v-on:change="onChange"
 		watch: {
 			currentCanvas: {
 				handler(){
-					console.log('watch currentCanvas')
 					this.drawCanvas();
 				}
 			},
 			selected: {
 				deep: true,
 				handler(){
-					console.log('watch selected')
 					this.drawCanvas();
 				}
 			},
 			selectedMod: {
 				deep: true,
 				handler(){
-					console.log('(watch selectedMod)')
 					this.selectedRate['mod'].collectionRate.got = this.selectedMod.guns.length;
 					if(this.currentCanvas=='mod'){
-						console.log('watch selectedMod called')
 						this.drawCanvas();
 					}
 				}
@@ -1092,10 +1091,8 @@ v-on:change="onChange"
 			selectedPoster: {
 				deep: true,
 				handler(){
-					console.log('(watch selectedPoster)')
 					this.selectedRate['poster'].collectionRate.got = this.selectedPoster.guns.length;
 					if(this.currentCanvas=='poster'){
-						console.log('watch selectedPoster called')
 						this.drawCanvas();
 					}
 				}
@@ -1103,7 +1100,6 @@ v-on:change="onChange"
 			lang: {
 				immediate: true,
 				handler(){
-					console.log('watch lang')
 					this.$i18n.locale = this.lang
 					//this.title.lang = this.lang
 					//this.texts = textData[this.lang];
@@ -1112,7 +1108,6 @@ v-on:change="onChange"
 			server: {
 				immediate: true,
 				handler(){
-					console.log('watch server')
 					this.positionData = {
 						"mod": {},
 						"poster": {}
@@ -1136,13 +1131,11 @@ v-on:change="onChange"
 		},
 		mounted: function () {
 			this.$nextTick(function () {
-				console.log('mounted nextTick')
 				this.drawCanvas();
 			})
 		},
 		methods: {
 			debounceInput: _.debounce(function(e){
-				console.log('methods debounceInput')
 				this.drawCanvas()
 			}, 500),
 			store: function(key, value){
@@ -1161,7 +1154,6 @@ v-on:change="onChange"
 			},
 			storeAll: function(){
 				this.msg = this.$i18n.messages[this.lang].message.saveCfg;
-				console.log('STORE')
 				this.store(STORE_KEY_SELECTED, this.selected)
 				this.store(STORE_KEY_MOD, this.selectedMod)
 				this.store(STORE_KEY_POSTER, this.selectedPoster)
@@ -1172,7 +1164,6 @@ v-on:change="onChange"
 				this.msg = this.$i18n.messages[this.lang].message.saveCfgDone;
 			},
 			restoreAll: function (){
-				console.log('RESTORE')
 				this.msg = this.$i18n.messages[this.lang].message.loadCfg;
 				this.restored = true;
 				let s = this.restore(STORE_KEY_SELECTED), smod = this.restore(STORE_KEY_MOD), sposter = this.restore(STORE_KEY_POSTER),
@@ -1190,7 +1181,6 @@ v-on:change="onChange"
 				this.msg = this.$i18n.messages[this.lang].message.loadCfgDone;
 				alert(this.$i18n.messages[this.lang].message.loadCfgTime + ": " + this.selected.now);
 				this.selected.now = now;
-				console.log('END RESTORE')
 			},
 			exportJSON: function(){
 				let data = {};
@@ -1206,7 +1196,6 @@ v-on:change="onChange"
 				saveData(v4, 'application/json', 'gfdata.json');
 			},
 			importJSON: function(event){
-				console.log('importJSON')
 				this.msg = this.$i18n.messages[this.lang].message.loadCfg;
 				var input = event.target;
 				if(input.files && input.files[0]){
@@ -1232,7 +1221,6 @@ v-on:change="onChange"
 					reader.readAsDataURL(input.files[0]);
 				}
 				this.msg = this.$i18n.messages[this.lang].message.loadCfgDone;
-				console.log('END importJSON')
 			},
 			exportPNG: function(){
 				this.msg = this.$i18n.messages[this.lang].message.generatePicture;
@@ -1277,7 +1265,6 @@ v-on:change="onChange"
 				window.requestAnimationFrame(step);
 			},
 			drawCanvas: function(){
-				console.log('this.restored', this.restored)
 				if(this.restored){
 					return;
 				}

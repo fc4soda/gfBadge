@@ -127,7 +127,7 @@ export const jsonTexts = {
 			"btnSaveCfgJSON": "Save JSON Config",
 			"btnLoadCfgJSON": "Load JSON Config",
 			"btnExportPNG": "Save Image",
-			"btnToTop": "To Top",
+			"btnToTop": "Top",
 			"tabGeneral": {
 				"title": "General",
 				"name": "Name",
@@ -196,7 +196,7 @@ export const jsonTexts = {
 			"ui":{
 				"selectTypeAll": "Select All",
 				"selectAll": "Select All Guns",
-				"visitedCount": "Total Visited",
+				"visitedCount": "Visit",
 			},
 		},
 		"jp": {
@@ -215,7 +215,7 @@ export const jsonTexts = {
 			"btnSaveCfgJSON": "Save JSON Config",
 			"btnLoadCfgJSON": "Load JSON Config",
 			"btnExportPNG": "Save Image",
-			"btnToTop": "To Top",
+			"btnToTop": "Top",
 			"tabGeneral": {
 				"title": "General",
 				"name": "Name",
@@ -284,7 +284,7 @@ export const jsonTexts = {
 			"ui":{
 				"selectTypeAll": "Select All",
 				"selectAll": "Select All Guns",
-				"visitedCount": "Total Visited",
+				"visitedCount": "Visit",
 			}
 		}
 	}
