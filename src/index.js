@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.min.js'
 import VueI18n from 'vue-i18n'
 import axios from 'axios';
+import fontsCss from 'fonts.css/dist/fonts.css';
 
 import jsonData from './data_format.json';
 import { jsonTexts } from './langs.js';
@@ -194,10 +195,10 @@ const star6 = '#ff4d4d',
 	  star2 = 'white',
 	  starEx = '#ccb3ff';
 let userAvatarSize = 116, userAvatarX = 40, userAvatarY = 44,
-	font = 'Baskerville, Georgia, "Liberation Serif", "Kaiti SC",\
-		STKaiti, "AR PL UKai CN", "AR PL UKai HK", "AR PL UKai TW",\
-		"AR PL UKai TW MBE", "AR PL KaitiM GB", KaiTi, KaiTi_GB2312,\
-		DFKai-SB, "TW\-Kai", serif';
+	font = '-apple-system, "Noto Sans", "Helvetica Neue", Helvetica,\
+	 "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB",\
+	 "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN", "Microsoft YaHei", \
+	 "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif';
 // TODO change px to ratio
 var now = new Date().toISOString().split('T')[0],
 	logo = "Girls' Frontline";
@@ -322,6 +323,33 @@ var UIData = {
 				"align":'left',
 				"baseline":'middle'
 			}
+		},
+		"fairy":{
+			"x": 250,
+			"y": 25,
+			"r": 20,
+			"limit": 10,
+			"alpha": 0.3,
+			"gap":0,
+			"lineWidth": 0.7,
+			"typeText":{
+				"offset": -15,
+				"font": '1.1rem '+font,
+				"fillStyle":"white",
+				"lineWidth": 2,
+				"strokeStyle":'black',
+				"align":'right',
+				"baseline":'middle'
+			},
+			"numText":{
+				"offset": 15,
+				"font": '.9rem '+font,
+				"fillStyle":"white",
+				"lineWidth": 2,
+				"strokeStyle":'black',
+				"align":'left',
+				"baseline":'middle'
+			}
 		}
 	},
 	"poster":{
@@ -348,7 +376,7 @@ var UIData = {
 		},
 		"userName": {
 			"x": 30,
-			"y": 30,
+			"y": 32,
 			"font": '1.25rem '+font,
 			"strokeStyle": "black",
 			"lineWidth": 3,
@@ -447,6 +475,7 @@ var selected = {
 	"background":"BGDefult_fixed",
 	"userServer": messages[lang].tabGeneral.server.nameDefault,
 	"userAdjutant":"M4A1",
+	"showAdjutant": true,
 	"adjutantOffsetX": 0,
 	"adjutantOffsetY": 0,
 	"adjutantScaleFactor": 1,
@@ -479,6 +508,7 @@ var selectedDebounce = {
 	"userName": messages[lang].tabGeneral.nameDefault,
 	"userLevel": 1,
 	"userServerCustom": "",
+	"userUid": "",
 }
 var currentTab = 0;
 var currentCanvas = "mod";
@@ -613,11 +643,10 @@ function percentCalc(got, sum){
 function prepareData(initData, server){
 	let result = {}
 	let hgList=[], arList=[], smgList=[], rfList=[], mgList=[], sgList=[],
-		hgSkinList=[], arSkinList=[], smgSkinList=[], rfSkinList=[], mgSkinList=[], sgSkinList=[],
-		allGun = initData.allGun;
+		hgSkinList=[], arSkinList=[], smgSkinList=[], rfSkinList=[], mgSkinList=[], sgSkinList=[];
 	let modHgList=[], modArList=[], modSmgList=[], modRfList=[], modMgList=[], modSgList=[];
-	for(let no in allGun){
-		let gun = allGun[no],
+	for(let no in initData.allGun){
+		let gun = initData.allGun[no],
 			item = {
 				"name": gun.name,
 				"cnname": gun.cnname,
@@ -627,7 +656,8 @@ function prepareData(initData, server){
 				"imgs": gun.imgs,
 				"mods": gun.mods,
 				"skins": gun.skins,
-				"img":gun.imgs[0]["img"]
+				"img":gun.imgs[0]["img"],
+				"imgDamaged":gun.imgs[0]["imgDamaged"]
 			};
 		if(server == 'cn' || gun[server+'exist']){
 
@@ -658,6 +688,7 @@ function prepareData(initData, server){
 					"enname": gun.mods.mod3.enname,
 					"no": gun.mods.mod3.no,
 					"img":gun.mods.mod3.img,
+					"imgDamaged":gun.mods.mod3.imgDamaged,
 					'stars': gun.mods.mod3.stars,
 				};
 
@@ -689,7 +720,8 @@ function prepareData(initData, server){
 						"cnname": skin.cnname,
 						"enname": skin.enname,
 						"no": skin.no,
-						"img":skin.img
+						"img":skin.img,
+						"imgDamaged":skin.imgDamaged
 					};
 				if(server=='cn' || skin[server+'exist']){
 					if(gun.type=='AR'){
@@ -709,15 +741,6 @@ function prepareData(initData, server){
 
 			}
 		}
-
-	}
-	result.allGunList = {
-		AR: arList,
-		SMG: smgList,
-		RF: rfList,
-		MG: mgList,
-		SG: sgList,
-		HG: hgList
 	}
 
 	result.skinGunList = {
@@ -727,6 +750,67 @@ function prepareData(initData, server){
 		MG: mgSkinList,
 		SG: sgSkinList,
 		HG: hgSkinList
+	}
+
+	result.skinGunList.NPC = [];
+	for(let no in initData.npc){
+		let gun = initData.npc[no],
+			item = {
+				"name": gun.name,
+				"cnname": gun.cnname,
+				"enname": gun.enname,
+				"no": no,
+				"imgs": gun.imgs,
+				"img":gun.imgs[0]["img"],
+				"imgDamaged":gun.imgs[0]["imgDamaged"],
+				"type": gun.type
+			};
+		if(server == 'cn' || gun[server+'exist']){
+			result.skinGunList.NPC.push(item);
+		}
+
+		for(let s in gun.skins){
+			let skin = gun.skins[s],
+				itemSkin = {
+					"name": skin.name,
+					"cnname": skin.cnname,
+					"enname": skin.enname,
+					"no": skin.no,
+					"img":skin.img,
+					"imgDamaged":skin.imgDamaged
+				};
+			if(server=='cn' || skin[server+'exist']){
+				result.skinGunList.NPC.push(itemSkin);
+			}
+
+		}
+	}
+	result.skinGunList.ENEMY = [];
+	for(let no in initData.enemy){
+		let gun = initData.enemy[no],
+			item = {
+				"name": gun.name,
+				"cnname": gun.cnname,
+				"enname": gun.enname,
+				"no": no,
+				"imgs": gun.imgs,
+				"skins": gun.skins,
+				"img":gun.imgs[0]["img"],
+				"imgDamaged":gun.imgs[0]["imgDamaged"],
+				"type": gun.type
+			};
+		if(server == 'cn' || gun[server+'exist']){
+			result.skinGunList.ENEMY.push(item);
+		}
+	}
+
+	result.allGunList = {
+		AR: arList,
+		SMG: smgList,
+		RF: rfList,
+		MG: mgList,
+		SG: sgList,
+		HG: hgList
 	}
 
 	result.modGunList = {
@@ -764,29 +848,32 @@ function component(){
 			value: String,
 			label: String,
 			gun_name: String,
-			id: String
+			id: String,
+			img: String,
+			img_d: String,
 		},
 		computed: {
 			checked() {
 				return this.value;
 			},
-			img() {
-				return genImgName(this.gun_name, 'avatar');
-			},
-			nameD() {
-				return this.gun_name + '_D';
+			img_src() {
+				return genImgName(this.img, 'avatar');
 			},
 			myid(){
 				return 'team_' + this.id;
 			},
-			myidD(){
+			myid_d(){
 				return 'team_' + this.id + '_d';
 			},
 			is_normal() {
-				return this.gun_name == this.value;
+				return this.img == this.value;
 			},
 			is_damaged() {
-				return (this.gun_name + '_D') == this.value;
+				return (this.img_d) == this.value;
+			},
+			has_damaged(){
+				let r = this.img_d!=undefined && this.img_d!=''
+				return r
 			}
 		},
 		methods: {
@@ -798,13 +885,13 @@ function component(){
 		template: `
 		<label v-b-tooltip.hover :title="label" class="gunLite d-inline-block mx-1 my-1" v-bind:class="{gunLiteSelected:gun_name==value}" label-cols="3" label-align="right"
 			   v-bind:checked="checked" v-on:change="$emit('change', $event.target.value)" v-bind:label-for="myid">
-		  <b-img v-bind:src="img" fluid v-bind:alt="label"></b-img>
+		  <b-img v-bind:src="img_src" fluid v-bind:alt="label"></b-img>
 		  <span>{{label}}</span>
-		  <b-form-radio class="d-none" type="radio" name="teamRadio" :data-id="id" v-bind:value="gun_name" v-bind:id="myid"></b-form-radio>
+		  <b-form-radio class="d-none" type="radio" name="teamRadio" :data-id="id" v-bind:value="img" v-bind:id="myid"></b-form-radio>
 
-		  <label class="gunLiteDamaged border border-secondary" v-bind:class="{'bg-danger':is_damaged, 'text-white':is_damaged}" label-cols="3" label-align="right"
-				 v-bind:label-for="myidD">破
-			<b-form-radio class="d-none" name="teamRadio" :data-id="id" v-bind:value="nameD" v-bind:id="myidD"></b-form-radio>
+		  <label v-if="has_damaged" class="gunLiteDamaged border border-secondary" v-bind:class="{'bg-danger':is_damaged, 'text-white':is_damaged}" label-cols="3" label-align="right"
+				 v-bind:label-for="myid_d">破
+			<b-form-radio class="d-none" name="teamRadio" :data-id="id" v-bind:value="img_d" v-bind:id="myid_d"></b-form-radio>
 		  </label>
 		</label>`
 	})
@@ -1285,15 +1372,21 @@ v-on:change="onChange"
 				//$('#resultMask').css('background-image', 'url(' + selected["background"] + ')');
 				//$('#resultMask').css('background-size', 'none');
 				//$('#resultMask').css('background-position', uiData["background"].x+' -'+uiData["background"].y);
-				let background = new Image(),
-					adjutant = new Image();
-				let count = 2;
-				background.onload = adjutant.onload = counter;
+				let background = new Image();
+				let count = 1;
+				if(this.selected.showAdjutant){
+					count ++
+				}
+				background.onload = counter;
 				let backImg = genImgName(selected["background"], 'back');
 				background.src = backImg;
-				let adjutantImg = genImgName(this.selected.userAdjutant, 'tachie');
-				adjutant.src = adjutantImg;
-
+				let adjutant, adjutantImg;
+				if(this.selected.showAdjutant){
+					adjutant = new Image();
+					adjutant.onload = counter
+					adjutantImg = genImgName(this.selected.userAdjutant, 'tachie');
+					adjutant.src = adjutantImg;
+				}
 				let _this = this;
 
 
@@ -1322,8 +1415,10 @@ v-on:change="onChange"
 					ctx.drawImage(background, c.x+_this.selected.backgroundOffsetX, c.y+_this.selected.backgroundOffsetY, c.sw*_this.selected.backgroundScaleFactor, c.sh*_this.selected.backgroundScaleFactor, 0, 0, c.w, c.h);
 					ctx.globalAlpha = 1;
 					
-					c = uiData["adjutant"];
-					ctx.drawImage(adjutant, 0, 0, c.w-_this.selected.adjutantOffsetY, c.h-_this.selected.adjutantOffsetY, c.x+_this.selected.adjutantOffsetX, c.y+_this.selected.adjutantOffsetY, (c.w-_this.selected.adjutantOffsetY)*_this.selected.adjutantScaleFactor, (c.h-_this.selected.adjutantOffsetY)*_this.selected.adjutantScaleFactor);
+					if(_this.selected.showAdjutant){
+						c = uiData["adjutant"];
+						ctx.drawImage(adjutant, 0, 0, c.w-_this.selected.adjutantOffsetY, c.h-_this.selected.adjutantOffsetY, c.x+_this.selected.adjutantOffsetX, c.y+_this.selected.adjutantOffsetY, (c.w-_this.selected.adjutantOffsetY)*_this.selected.adjutantScaleFactor, (c.h-_this.selected.adjutantOffsetY)*_this.selected.adjutantScaleFactor);
+					}
 
 					c = uiData["userAvatar"];
 					if(c){
@@ -1339,12 +1434,17 @@ v-on:change="onChange"
 
 					c = uiData["userName"]
 					drawText(ctx, _this.selectedDebounce.userName, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
-					
+				
+					let userLevel = 'Lv. '+_this.selectedDebounce.userLevel;
+					if(_this.selectedDebounce.userUid != ''){
+						userLevel += '  UID'+ _this.selectedDebounce.userUid;
+					}
 					c = uiData["userLevel"]
-					drawText(ctx, 'Lv. '+_this.selectedDebounce.userLevel, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
+					drawText(ctx, userLevel, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
 
 					c = uiData["userServer"]
 					let userServer = _this.selectedDebounce.userServerCustom == '' ? _this.selected.userServer : _this.selectedDebounce.userServerCustom;
+			
 					drawText(ctx, userServer, c.x, c.y, c.font, c.fillStyle, c.lineWidth, c.strokeStyle, c.align, c.baseline);
 
 					c = uiData["collectionRate"]

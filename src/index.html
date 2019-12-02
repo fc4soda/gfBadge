@@ -9,8 +9,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body>
-
+<body class="font-hei">
 	<div id="loading" v-if="show" class="center-div">
 		<div class="spinner-grow" style="position: relative; width: 3rem; height: 3rem;" role="status"></div>
 		<strong class="d-inline-block">Loading</strong>
@@ -88,8 +87,16 @@
 									</b-form-input>
 								</b-form-group>
 							</b-col>
-							<b-col cols=5>
-								<b-form-group label-cols="5" label-align="right" :label="$t('tabGeneral.level')"
+							<b-col cols=3>
+								<b-form-group label-cols="2" label-align="right" :label="$t('tabGeneral.uid')"
+									label-for="tabGeneralUid">
+									<b-form-input id="tabGeneralUid" type="number" v-model="selectedDebounce.userUid"
+										@input="debounceInput">
+									</b-form-input>
+								</b-form-group>
+							</b-col>
+							<b-col cols=2>
+								<b-form-group label-cols="2" label-align="right" :label="$t('tabGeneral.level')"
 									label-for="tabGeneralLevel">
 									<b-form-input id="tabGeneralLevel" type="number" placeholder="1+" min=1
 										v-model.number="selectedDebounce.userLevel" @input="debounceInput">
@@ -112,7 +119,7 @@
 								</b-form-group>
 							</b-col>
 							<b-col cols=5>
-								<b-form-group label-cols="5" label-align="right"
+								<b-form-group label-cols="4" label-align="right"
 									:label="$t('tabGeneral.server.customServer')"
 									label-for="tabGeneralServerCustomName">
 									<b-form-input id="tabGeneralServerCustomName"
@@ -143,11 +150,16 @@
 						<template v-slot:title>
 							<i class="fa fa-user"></i>&nbsp;{{$t('tabTeam.title')}}
 						</template>
+						<div>
+							<b-form-checkbox v-model="selected.showAdjutant" switch>
+							  {{$t('tabTeam.showAdjutant')}}
+							</b-form-checkbox>
+						</div>
 						<div class="mb-3" v-for="(guns, type) in initData.skinGunList" :key="type">
 							<div class="gunType border text-md-center mb-1 mt-3">{{type}}</div>
 							<div class="gunContainer d-flex flex-row flex-wrap">
 								<team-gun-lite v-for="gun in guns" :label='gun[lang+"name"]' :gun_name='gun.name'
-									:id='gun.no' :key="gun.no" v-model="selected.userAdjutant"></team-gun-lite>
+									:id='gun.no' :key="gun.no" :img='gun.img' :img_d='gun.imgDamaged' v-model="selected.userAdjutant"></team-gun-lite>
 							</div>
 						</div>
 

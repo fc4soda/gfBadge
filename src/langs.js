@@ -31,6 +31,7 @@ export const jsonTexts = {
 			"tabGeneral": {
 				"title": "指挥官信息",
 				"name": "指挥官名称",
+				"uid": "UID",
 				"nameDefault": "无名",
 				"level": "Lv.",
 				"server": {
@@ -55,7 +56,8 @@ export const jsonTexts = {
 				}
 			},
 			"tabTeam": {
-				"title": "选择副官"
+				"title": "选择副官",
+				"showAdjutant": "显示副官"
 			},
 			"tabMod": {
 				"title": "三改进度"
@@ -131,6 +133,7 @@ export const jsonTexts = {
 			"tabGeneral": {
 				"title": "General",
 				"name": "Name",
+				"uid": "UID",
 				"nameDefault": "NONAME",
 				"level": "Lv.",
 				"server": {
@@ -150,7 +153,8 @@ export const jsonTexts = {
 				}
 			},
 			"tabTeam": {
-				"title": "Team"
+				"title": "Team",
+				"showAdjutant": "Show Adjutant"
 			},
 			"tabMod": {
 				"title": "Mod"
@@ -219,6 +223,7 @@ export const jsonTexts = {
 			"tabGeneral": {
 				"title": "General",
 				"name": "Name",
+				"uid": "UID",
 				"nameDefault": "NONAME",
 				"level": "Lv.",
 				"server": {
@@ -238,7 +243,8 @@ export const jsonTexts = {
 				}
 			},
 			"tabTeam": {
-				"title": "Team"
+				"title": "Team",
+				"showAdjutant": "Show Adjutant"
 			},
 			"tabMod": {
 				"title": "Mod"
