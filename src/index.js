@@ -1111,19 +1111,6 @@ v-on:change="onChange"
 		},
 	});
 
-
-	var title = new Vue({
-		i18n,
-		el: '#title',
-		data: {
-		},
-		computed: {
-			title: function(){
-				return this.$i18n.t('title');
-			}
-		},
-	});
-
 	var app = new Vue({
 		i18n,
 		el: '#app',
@@ -1150,6 +1137,8 @@ v-on:change="onChange"
 			sitePvChartUrl: sitePvChartUrl,
 			isPrd: isPrd,
 			restored: false,
+			showToast: false,
+			toast: "",
 		},
 		computed: {},
 		components: {
@@ -1187,9 +1176,8 @@ v-on:change="onChange"
 			lang: {
 				immediate: true,
 				handler(){
-					this.$i18n.locale = this.lang
-					//this.title.lang = this.lang
-					//this.texts = textData[this.lang];
+					this.$i18n.locale = this.lang;
+					document.title = this.$i18n.t('title');
 				}
 			},
 			server: {
@@ -1302,7 +1290,8 @@ v-on:change="onChange"
 						this.server = server ? server : this.server;
 						this.$refs.mod_055m[0].select(this.selectedMod.guns);
 						this.restored = false;
-						alert(this.$i18n.messages[this.lang].message.loadCfgTime + ": " + this.selected.now);
+						this.toast = this.$i18n.messages[this.lang].message.loadCfgTime + ": " + this.selected.now;
+						this.showToast = true;
 						this.selected.now = now;
 					}
 					reader.readAsDataURL(input.files[0]);

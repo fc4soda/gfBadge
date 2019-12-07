@@ -105,12 +105,16 @@ export const jsonTexts = {
 				"saveCfgDone": "保存配置完成",
 				"loadCfg": "加载配置中...",
 				"loadCfgDone": "加载配置完成",
-				"loadCfgTime": "加载的配置创建时间为",
+				"loadCfgTime": "加载的配置创建于",
 			},
 			"ui":{
 				"selectTypeAll": "全选",
 				"selectAll": "全选所有",
-				"visitedCount": "总访问量",
+				"visitCount": "总访问量",
+				"saveCfgTip": "保存到浏览器缓存",
+				"loadCfgTip": "从浏览器缓存读取",
+				"saveCfgJSONTip": "保存为配置文件",
+				"loadCfgJSONTip": "从文件读取配置"
 			},
 		},
 		"en": {
@@ -200,7 +204,11 @@ export const jsonTexts = {
 			"ui":{
 				"selectTypeAll": "Select All",
 				"selectAll": "Select All Guns",
-				"visitedCount": "Visit",
+				"visitCount": "Visit",
+				"saveCfgTip": "Save to browser cache",
+				"loadCfgTip": "Load from browser cache",
+				"saveCfgJSONTip": "Save to config file",
+				"loadCfgJSONTip": "Load from config file"
 			},
 		},
 		"jp": {
@@ -290,7 +298,11 @@ export const jsonTexts = {
 			"ui":{
 				"selectTypeAll": "Select All",
 				"selectAll": "Select All Guns",
-				"visitedCount": "Visit",
+				"visitCount": "Visit",
+				"saveCfgTip": "Save to browser cache",
+				"loadCfgTip": "Load from browser cache",
+				"saveCfgJSONTip": "Save to config file",
+				"loadCfgJSONTip": "Load from config file"
 			}
 		}
 	}

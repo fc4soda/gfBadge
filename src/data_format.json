@@ -3048,7 +3048,15 @@
                     "imgDamaged": "PDW_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "PDW_4005",
+                    "cnname": "圣诞公主和不笑贝特",
+                    "no": "203_4005",
+                    "img": "PDW_4005",
+                    "imgDamaged": "PDW_4005_D"
+                }
+            ]
         },
         "204": {
             "type": "RF",
@@ -5696,7 +5704,19 @@
                     "imgDamaged": "MAB38_D"
                 }
             ],
-            "skins": []
+            "skins": [],
+            "mods": {
+                "mod3": {
+					"enexist": true,
+                    "name": "MAB38Mod",
+                    "cnname": "伯莱塔38型Mod",
+                    "enname": "MAB38Mod",
+                    "no": "031m",
+                    "stars": 3,
+                    "img": "MAB38Mod",
+                    "imgDamaged": "MAB38Mod_D"
+                }
+            }
         },
         "032": {
             "type": "SMG",
@@ -6509,7 +6529,19 @@
                     "img": "NTW20_2301",
                     "imgDamaged": "NTW20_2301_D"
                 }
-            ]
+            ],
+            "mods": {
+                "mod3": {
+					"enexist": true,
+                    "name": "NTW20Mod",
+                    "cnname": "NTW-20Mod",
+                    "enname": "NTW20Mod",
+                    "no": "053m",
+                    "stars": 6,
+                    "img": "NTW20Mod",
+                    "imgDamaged": "NTW20Mod_D"
+                }
+            }
         },
         "095": {
             "type": "RF",
@@ -7342,7 +7374,19 @@
                     "imgDamaged": "APS_D"
                 }
             ],
-            "skins": []
+            "skins": [],
+            "mods": {
+                "mod3": {
+					"enexist": true,
+                    "name": "APSMod",
+                    "cnname": "斯捷奇金Mod",
+                    "enname": "APSMod",
+                    "no": "007m",
+                    "stars": 5,
+                    "img": "APSMod",
+                    "imgDamaged": "APSMod_D"
+                }
+            }
         },
         "008": {
             "type": "HG",
@@ -7466,7 +7510,19 @@
                     "imgDamaged": "C96_D"
                 }
             ],
-            "skins": []
+            "skins": [],
+            "mods": {
+                "mod3": {
+					"enexist": true,
+                    "name": "C96Mod",
+                    "cnname": "C96Mod",
+                    "enname": "C96Mod",
+                    "no": "012m",
+                    "stars": 4,
+                    "img": "C96Mod",
+                    "imgDamaged": "C96Mod_D"
+                }
+            }
         },
         "013": {
             "type": "HG",
@@ -8767,7 +8823,9 @@
         "094",
         "095",
         "101",
-        "103"
+        "103",
+        "031",
+        "012"
     ],
     "background": {
         "03": {
