@@ -2996,6 +2996,13 @@
                     "no": "201_3107",
                     "img": "GepardM1_3107",
                     "imgDamaged": "GepardM1_3107_D"
+                },
+                {
+                    "name": "GepardM1_4006",
+                    "cnname": "无垢庇护者",
+                    "no": "201_4006",
+                    "img": "GepardM1_4006",
+                    "imgDamaged": "GepardM1_4006_D"
                 }
             ]
         },
@@ -3201,6 +3208,13 @@
                     "no": "208_2701",
                     "img": "HK21_2701",
                     "imgDamaged": "HK21_2701_D"
+                },
+                {
+                    "name": "HK21_4002",
+                    "cnname": "银狐的⅑月台",
+                    "no": "208_4002",
+                    "img": "HK21_4002",
+                    "imgDamaged": "HK21_4002_D"
                 }
             ]
         },
@@ -3654,6 +3668,13 @@
                     "no": "228_2903",
                     "img": "Type100_2903",
                     "imgDamaged": "Type100_2903_D"
+                },
+                {
+                    "name": "Type100_4004",
+                    "cnname": "埋入心底的宝藏",
+                    "no": "228_4004",
+                    "img": "Type100_4004",
+                    "imgDamaged": "Type100_4004_D"
                 }
             ]
         },
@@ -4198,6 +4219,13 @@
                     "no": "253_3502",
                     "img": "Lewis_3502",
                     "imgDamaged": "Lewis_3502_D"
+                },
+                {
+                    "name": "Lewis_4001",
+                    "cnname": "圣夜约定",
+                    "no": "253_4001",
+                    "img": "Lewis_4001",
+                    "imgDamaged": "Lewis_4001_D"
                 }
             ]
         },
@@ -5707,7 +5735,7 @@
             "skins": [],
             "mods": {
                 "mod3": {
-					"enexist": true,
+					"enexist": false,
                     "name": "MAB38Mod",
                     "cnname": "伯莱塔38型Mod",
                     "enname": "MAB38Mod",
@@ -6532,7 +6560,7 @@
             ],
             "mods": {
                 "mod3": {
-					"enexist": true,
+					"enexist": false,
                     "name": "NTW20Mod",
                     "cnname": "NTW-20Mod",
                     "enname": "NTW20Mod",
@@ -6858,6 +6886,13 @@
                     "no": "081_1808",
                     "img": "LWMMG_1808",
                     "imgDamaged": "LWMMG_1808_D"
+                },
+                {
+                    "name": "LWMMG_4007",
+                    "cnname": "12月是我的谎言",
+                    "no": "081_4007",
+                    "img": "LWMMG_4007",
+                    "imgDamaged": "LWMMG_4007_D"
                 }
             ],
             "mods": {
@@ -7377,7 +7412,7 @@
             "skins": [],
             "mods": {
                 "mod3": {
-					"enexist": true,
+					"enexist": false,
                     "name": "APSMod",
                     "cnname": "斯捷奇金Mod",
                     "enname": "APSMod",
@@ -7513,7 +7548,7 @@
             "skins": [],
             "mods": {
                 "mod3": {
-					"enexist": true,
+					"enexist": false,
                     "name": "C96Mod",
                     "cnname": "C96Mod",
                     "enname": "C96Mod",
@@ -8076,7 +8111,15 @@
                     "imgDamaged": "HKCAWS_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "HKCAWS_4003",
+                    "cnname": "120份冬日礼物",
+                    "no": "281_4003",
+                    "img": "HKCAWS_4003",
+                    "imgDamaged": "HKCAWS_4003_D"
+                }
+            ]
         },
         "279": {
             "type": "AR",
@@ -8094,6 +8137,46 @@
                     "no": "279",
                     "img": "INSAS",
                     "imgDamaged": "INSAS_D"
+                }
+            ],
+            "skins": []
+        },
+        "280": {
+            "type": "SMG",
+			"enexist": false,
+			"jpexist": false,
+            "name": "MAT49",
+            "cnname": "MAT-49",
+            "enname": "MAT-49",
+            "stars": 4,
+            "imgs": [
+                {
+                    "name": "MAT49",
+                    "cnname": "MAT-49",
+                    "enname": "MAT-49",
+                    "no": "280",
+                    "img": "MAT49",
+                    "imgDamaged": "MAT49_D"
+                }
+            ],
+            "skins": []
+        },
+        "284": {
+            "type": "RF",
+			"enexist": false,
+			"jpexist": false,
+            "name": "ZasM76",
+            "cnname": "Zas M76",
+            "enname": "Zas M76",
+            "stars": 3,
+            "imgs": [
+                {
+                    "name": "ZasM76",
+                    "cnname": "Zas M76",
+                    "enname": "Zas M76",
+                    "no": "284",
+                    "img": "ZasM76",
+                    "imgDamaged": "ZasM76_D"
                 }
             ],
             "skins": []

@@ -32,25 +32,10 @@ $blue:      #268bd2;
 $cyan:      #2aa198;
 $green:     #859900;
 
-@mixin font-content {
-  font-family: "arial", // windows
-			   "helvetica", // os x
-			   "Source Han Serif SC", "Noto Sans CJK SC", // linux
-			   STZhongsong, "Microsoft YaHei", // windows
-			   "PingFang SC", "Myriad Pro", 'Hiragino Sans GB', // os x
-			   "WenQuanYi Micro Hei" // linux
-}
-
 $bg:        $base3;
 $fg:        $base02;
 
 [v-cloak] > * { display:none }
-
-body {
-  /*
-  @include font-content;
- */
-}
 
 label.btn {
   cursor: pointer;
@@ -83,6 +68,10 @@ label.btn {
 .gunLiteSelected {
   border: 1px solid $red;
   box-shadow: 2px 1px $red;
+  & span{
+    background-color: $red;
+    color: white;
+  }
 }
 
 .gunLiteDamaged { 
