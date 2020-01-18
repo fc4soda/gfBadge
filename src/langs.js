@@ -3,12 +3,14 @@ export const jsonTexts = {
 	"langs": {
 		"cn": "简中",
 		"en": "English",
-		"jp": "日本語"
+		"jp": "日本語",
+		"kr": "한국어",
 	},
 	"servers":{
 		"cn": "简",
 		"en": "En",
-		"jp": "日"
+		"jp": "日",
+		"kr": "한국",
 	},
 	"textData": {
 		"cn": {
@@ -304,6 +306,100 @@ export const jsonTexts = {
 				"saveCfgJSONTip": "Save to config file",
 				"loadCfgJSONTip": "Load from config file"
 			}
+		},
+		"kr": {
+			"title": "GF Badge",
+			"tutorial": "It is recommended to use Google Chrome or Firefox to access this website.<br/>Feedback at <a href='https://github.com/fc4soda/gfBadge'>github[en]</a> or <a href='https://bbs.nga.cn/read.php?tid=18388732'>nga[zh-cn]</a>.",
+			"canvasSwitch": {
+				"options": [
+					{ "text": "Mod", "value": "mod" },
+					{ "text": "Poster", "value": "poster" }
+				]
+			},
+			"selectLang": "Language",
+			"selectServer": "Server",
+			"btnSaveCfg": "Save Config",
+			"btnLoadCfg": "Load Config",
+			"btnSaveCfgJSON": "Save JSON Config",
+			"btnLoadCfgJSON": "Load JSON Config",
+			"btnExportPNG": "Save Image",
+			"btnToTop": "Top",
+			"tabGeneral": {
+				"title": "General",
+				"name": "Name",
+				"uid": "UID",
+				"nameDefault": "NONAME",
+				"level": "Lv.",
+				"server": {
+					"name": "Server",
+					"customServer": "Custom Server Name",
+					"nameDefault": "Unknow Server",
+					"options":[
+						{ "text": "Android 0", "value": "Android 0"},
+						{ "text": "IOS 0", "value": "IOS 0"},
+						{ "text": "Bilibili 0", "value": "Bilibili 0"},
+					]
+				},
+				"avatar":{
+					"name": "Avatar",
+					"clear": "Clear",
+					"select": "Select Avatar"
+				}
+			},
+			"tabTeam": {
+				"title": "Team",
+				"showAdjutant": "Show Adjutant"
+			},
+			"tabMod": {
+				"title": "Mod"
+			},
+			"tabPoster": {
+				"title": "Poster"
+			},
+			"tabBackground": {
+				"title": "Background"
+			},
+			"tabAdjust": {
+				"title": "Adjust",
+				"adjutantOffset": "Adjutant Offset",
+				"adjutantOffsetX": "Adjutant Offset X",
+				"adjutantOffsetY": "Adjutant Offset Y",
+				"adjutantScaleFactor": "Adjutant Scale Factor",
+				"adjutantCustomImg": "Custom Adjutant Image",
+				"background": "Background",
+				"backgroundOffsetX": "Background Offset X",
+				"backgroundOffsetY": "Background Offset Y",
+				"backgroundScaleFactor": "Background Scale Factor",
+				"backgroundAplha": "Background Alpha",
+				"gunLiteBackgroundAlpha": "Gun Background Alpha",
+				"backgroundCustomImg": "Custom Background Image",
+				"backgroundCustomOffsetX": "Custom Background Image Offset X",
+				"backgroundCustomOffsetY": "Custom Background Image Offset Y",
+				"backgroundCustomScaleFactor": "Custom Background Scale Factor",
+				"backgroundCustomAlpha": "Custom Background Image Alpha",
+				"backgroundCustomStretch": "Custom Background Image Stretch"
+			},
+			"message":{
+				"loadPictures": "Loading Pictures...",
+				"loadDone": "Loaded",
+				"loadPage": "Loading Page...",
+				"generatePicture": "Generating Picture...",
+				"generateDone": "Generated",
+				"saveCfg": "Saving Config...",
+				"saveCfgDone": "Config Saved",
+				"loadCfg": "Loading Config...",
+				"loadCfgDone": "Config Loaded",
+				"loadCfgTime": "Loaded Config Created At",
+			},
+			"ui":{
+				"selectTypeAll": "Select All",
+				"selectAll": "Select All Guns",
+				"visitCount": "Visit",
+				"saveCfgTip": "Save to browser cache",
+				"loadCfgTip": "Load from browser cache",
+				"saveCfgJSONTip": "Save to config file",
+				"loadCfgJSONTip": "Load from config file"
+			},
 		}
 	}
 }

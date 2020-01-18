@@ -57,15 +57,20 @@
 
 				<div class="ml-4 align-self-stretch d-flex flex-column align-content-center justify-content-center">
 					<div class="ml-4 align-self-stretch">
-						<b-button v-b-tooltip.hover :title="$t('ui.saveCfgTip')" id="saveCfgBtn" class="my-1" variant="secondary" @click="storeAll"><i
+						<b-button v-b-tooltip.hover :title="$t('ui.saveCfgTip')" id="saveCfgBtn" class="my-1"
+							variant="secondary" @click="storeAll"><i
 								class="fa fa-angle-double-down"></i>&nbsp;{{ $t('btnSaveCfg') }}</b-button>
-						<b-button v-b-tooltip.hover :title="$t('ui.loadCfgTip')" id="loadCfgBtn" class="my-1" variant="secondary" @click="restoreAll"><i
+						<b-button v-b-tooltip.hover :title="$t('ui.loadCfgTip')" id="loadCfgBtn" class="my-1"
+							variant="secondary" @click="restoreAll"><i
 								class="fa fa-angle-double-up"></i>&nbsp;{{ $t('btnLoadCfg') }}</b-button>
-						<b-button v-b-tooltip.hover :title="$t('ui.saveCfgJSONTip')" id="saveCfgBtn" class="my-1" variant="dark" @click="exportJSON"><i
+						<b-button v-b-tooltip.hover :title="$t('ui.saveCfgJSONTip')" id="saveCfgBtn" class="my-1"
+							variant="dark" @click="exportJSON"><i
 								class="fa fa-download"></i>&nbsp;{{ $t('btnSaveCfgJSON') }}</b-button>
-						<b-button v-b-tooltip.hover :title="$t('ui.loadCfgJSONTip')" id="loadCfgBtn" class="my-1" variant="dark" @click="$refs.importJSONInput.$el.click()"><i
+						<b-button v-b-tooltip.hover :title="$t('ui.loadCfgJSONTip')" id="loadCfgBtn" class="my-1"
+							variant="dark" @click="$refs.importJSONInput.$el.click()"><i
 								class="fa fa-upload"></i>&nbsp;{{ $t('btnLoadCfgJSON') }}</b-button>
-						<b-form-file ref="importJSONInput" @change="importJSON" class="d-none" accept="application/json" plain></b-form-file>
+						<b-form-file ref="importJSONInput" @change="importJSON" class="d-none" accept="application/json"
+							plain></b-form-file>
 						<b-button id="exportPNGBtn" class="my-1" variant="primary" @click="exportPNG"><i
 								class="fa fa-image"></i>&nbsp;{{ $t('btnExportPNG') }}</b-button>
 					</div>
@@ -152,14 +157,15 @@
 						</template>
 						<div>
 							<b-form-checkbox v-model="selected.showAdjutant" switch>
-							  {{$t('tabTeam.showAdjutant')}}
+								{{$t('tabTeam.showAdjutant')}}
 							</b-form-checkbox>
 						</div>
 						<div class="mb-3" v-for="(guns, type) in initData.skinGunList" :key="type">
 							<div class="gunType border text-md-center mb-1 mt-3">{{type}}</div>
 							<div class="gunContainer d-flex flex-row flex-wrap">
 								<team-gun-lite v-for="gun in guns" :label='gun[lang+"name"]' :gun_name='gun.name'
-									:id='gun.no' :key="gun.no" :img='gun.img' :img_d='gun.imgDamaged' v-model="selected.userAdjutant"></team-gun-lite>
+									:id='gun.no' :key="gun.no" :img='gun.img' :img_d='gun.imgDamaged'
+									v-model="selected.userAdjutant"></team-gun-lite>
 							</div>
 						</div>
 
@@ -188,7 +194,7 @@
 							<i class="fa fa-table"></i>&nbsp;{{$t('tabPoster.title')}}
 						</template>
 						<!-- <gun-checkall :guns='initData.allGunList' v-model="selected.poster.coll.Allchecked" :selected='selected.poster.guns'></gun-checkall> -->
-						<div class="mb-3" v-for="(guns, type) in initData.allGunList" :key="type">
+						<div class="mb-3" v-for="(guns, type) in initData.allGunList">
 							<gun-type-checkbox :guns='guns' v-model="selectedRate.poster.coll[type+'checked']"
 								:type='type' :selected='selectedPoster' :selected_rate='selectedRate'
 								:text='$t("ui.selectTypeAll")' :current_tab='"poster"'></gun-type-checkbox>
@@ -502,19 +508,15 @@
 			</div>
 
 			<div class="mt-3 py-2 d-flex border-top justify-content-center" id="webStatistics">
-				<div>{{ $t('ui.visitCount') }}:&nbsp;<b-link :href="sitePvChartUrl">{{pv}}</b-link></div>
+				<div>{{ $t('ui.visitCount') }}:&nbsp;<b-link :href="sitePvChartUrl">{{pv}}</b-link>
+				</div>
 			</div>
 			<b-tooltip target="langs" triggers="hover"></b-tooltip>
-			<b-alert
-			v-model="showToast"
-			class="position-fixed fixed-bottom m-0 rounded-0"
-			style="z-index: 2000;"
-			variant="success"
-			dismissible
-		    >{{toast}}</b-alert>
+			<b-alert v-model="showToast" class="position-fixed fixed-bottom m-0 rounded-0" style="z-index: 2000;"
+				variant="success" dismissible>{{toast}}</b-alert>
 			<div v-cloak id="toTop">
 				<b-button variant="primary" @click="scrollToTop(300)"><i
-					class="fa fa-arrow-up"></i>&nbsp;{{ $t('btnToTop') }}</b-button>
+						class="fa fa-arrow-up"></i>&nbsp;{{ $t('btnToTop') }}</b-button>
 			</div>
 		</b-container>
 	</div>

@@ -442,7 +442,14 @@ var UIData = {
 			"x": 80,
 			"y": 30,
 			"r": 11,
-			"limit": 30,
+			"limit": {
+				"AR": 37,
+				"SMG": 37,
+				"RF": 30,
+				"HG": 30,
+				"MG": 30,
+				"SG": 30
+			},
 			"alpha": 0.3,
 			"gap": 12*0.8,
 			"lineWidth": 0.7,
@@ -599,6 +606,66 @@ function initGunPosition(xPos, yPos, R, gunList, limit, gap){
 				if(i==0){
 					result.text[t] = {};
 					result.text[t].name = {"x":Math.floor(x-fx*R), "y":Math.floor(y), "text":t };
+					if(jPrev%2==0){result.text[t].name.x -= Math.floor(fx*R)}
+				}
+				if(i==(l-1)){ result.text[t].num = {"x":Math.floor(x+fx*R), "y":Math.floor(y), "text":l }; }
+			}
+			jPrev += Math.floor((l-1)/limit+1);
+			tt ++;
+			sum += l;
+		}
+	}
+	result.sum = sum;
+	return result;
+}
+
+function initGunPosition2(xPos, yPos, R, gunList, limitMap, gap){
+	let typeSum = Object.keys(gunList).length,
+		fx = Math.cos(1/6*Math.PI),
+		fy = R,
+		fyy = Math.sin(1/6*Math.PI),
+		result = {"guns":{}, "text":{}};
+	let delta = 1;
+	let jPrev = 1, sum=0, tt=0;
+	for(let t in gunList){
+		let limit = limitMap[t];
+		let l = gunList[t].length;
+		if(l>0){
+			for(let i=0; i<l; i++){
+				//x = xPos+fx*R*(2*i+j%2);
+				//y = yPos+j*R*(2-fyy);
+				let ii = i%limit,
+					jj = jPrev+Math.floor(i/limit),
+					x = xPos+fx*R*(2*ii+(jj+1)%2),
+					y = yPos+jj*R*(2-fyy)+tt*gap;
+				let stars = gunList[t][i].stars, fillColor = "";
+				switch(stars){
+				case 2:
+					fillColor = star2;
+					break;
+				case 3:
+					fillColor = star3;
+					break;
+				case 4:
+					fillColor = star4;
+					break;
+				case 5:
+					fillColor = star5;
+					break;
+				case 6:
+					fillColor = star6;
+					break;
+				case 'ex':
+					fillColor = starEx;
+					break;
+				default:
+					fillColor = star2;
+				};
+				result.guns[gunList[t][i].no] = {"x":Math.floor(x), "y":Math.floor(y), "fillColor":fillColor, "img":genImgName(gunList[t][i].img, 'avatar')};
+				if(i==0){
+					result.text[t] = {};
+					result.text[t].name = {"x":Math.floor(x-fx*R), "y":Math.floor(y), "text":t };
+					if(jPrev%2==0){result.text[t].name.x -= Math.floor(fx*R)}
 				}
 				if(i==(l-1)){ result.text[t].num = {"x":Math.floor(x+fx*R), "y":Math.floor(y), "text":l }; }
 			}
@@ -659,7 +726,7 @@ function prepareData(initData, server){
 				"img":gun.imgs[0]["img"],
 				"imgDamaged":gun.imgs[0]["imgDamaged"]
 			};
-		if(server == 'cn' || gun[server+'exist']){
+		if(gun[server+'exist']){
 
 			if(gun.type=='AR'){
 				arList.push(item);
@@ -747,9 +814,9 @@ function prepareData(initData, server){
 		AR: arSkinList,
 		SMG: smgSkinList,
 		RF: rfSkinList,
+		HG: hgSkinList,
 		MG: mgSkinList,
-		SG: sgSkinList,
-		HG: hgSkinList
+		SG: sgSkinList
 	}
 
 	result.skinGunList.NPC = [];
@@ -765,7 +832,7 @@ function prepareData(initData, server){
 				"imgDamaged":gun.imgs[0]["imgDamaged"],
 				"type": gun.type
 			};
-		if(server == 'cn' || gun[server+'exist']){
+		if(server=='cn' || gun[server+'exist']){
 			result.skinGunList.NPC.push(item);
 		}
 
@@ -799,7 +866,7 @@ function prepareData(initData, server){
 				"imgDamaged":gun.imgs[0]["imgDamaged"],
 				"type": gun.type
 			};
-		if(server == 'cn' || gun[server+'exist']){
+		if(gun[server+'exist']){
 			result.skinGunList.ENEMY.push(item);
 		}
 	}
@@ -808,27 +875,27 @@ function prepareData(initData, server){
 		AR: arList,
 		SMG: smgList,
 		RF: rfList,
+		HG: hgList,
 		MG: mgList,
-		SG: sgList,
-		HG: hgList
+		SG: sgList
 	}
 
 	result.modGunList = {
 		AR: modArList,
 		SMG: modSmgList,
 		RF: modRfList,
+		HG: modHgList,
 		MG: modMgList,
-		SG: modSgList,
-		HG: modHgList
+		SG: modSgList
 	}
 
 	result.modGunList = {
 		AR: modArList,
 		SMG: modSmgList,
 		RF: modRfList,
+		HG: modHgList,
 		MG: modMgList,
-		SG: modSgList,
-		HG: modHgList
+		SG: modSgList
 	}
 
 	result.background = initData.background;
@@ -1194,7 +1261,7 @@ v-on:change="onChange"
 					let modGunPosition = initGunPosition(c.x, c.y, c.r, this.initData.modGunList, c.limit, c.gap);
 					this.positionData.mod = modGunPosition;
 					c = UIData.poster.guns;
-					let allGunPosition = initGunPosition(c.x, c.y, c.r, this.initData.allGunList, c.limit, c.gap);
+					let allGunPosition = initGunPosition2(c.x, c.y, c.r, this.initData.allGunList, c.limit, c.gap);
 					this.positionData.poster = allGunPosition;	
 					this.drawCanvas();
 				}
