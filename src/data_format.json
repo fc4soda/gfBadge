@@ -33,7 +33,7 @@
                     "name": "M1873_301",
                     "cnname": "直达星星的愿望",
                     "twname": "",
-                    "jpname": "",
+                    "jpname": "星への願い事",
                     "krname": "",
                     "no": "1_301",
                     "img": "M1873_301",
@@ -1403,7 +1403,18 @@
                     "imgDamaged": "M1A1_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "M1A1_4106",
+                    "cnname": "红梅照雪",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "35_4106",
+                    "img": "M1A1_4106",
+                    "imgDamaged": "M1A1_4106_D"
+                }
+            ]
         },
         "36": {
             "type": "RF",
@@ -3668,6 +3679,16 @@
                     "no": "88_3806",
                     "img": "MG3_3806",
                     "imgDamaged": "MG3_3806_D"
+                },
+                {
+                    "name": "MG3_4105",
+                    "cnname": "贺岁狮舞",
+                    "twname": "",
+                    "jpname": "迎春の獅子舞",
+                    "krname": "",
+                    "no": "88_4105",
+                    "img": "MG3_4105",
+                    "imgDamaged": "MG3_4105_D"
                 }
             ]
         },
@@ -5223,6 +5244,16 @@
                     "no": "118_1302",
                     "img": "9A91_1302",
                     "imgDamaged": "9A91_1302_D"
+                },
+                {
+                    "name": "9A91_4104",
+                    "cnname": "蕊梦矢",
+                    "twname": "",
+                    "jpname": "花と夢の破魔矢",
+                    "krname": "",
+                    "no": "118_4104",
+                    "img": "9A91_4104",
+                    "imgDamaged": "9A91_4104_D"
                 }
             ]
         },
@@ -5391,6 +5422,16 @@
                     "no": "122_2502",
                     "img": "G11_2502",
                     "imgDamaged": "G11_2502_D"
+                },
+                {
+                    "name": "G11_4102",
+                    "cnname": "福鼠懒春",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "122_4102",
+                    "img": "G11_4102",
+                    "imgDamaged": "G11_4102_D"
                 },
                 {
                     "name": "G11_maid",
@@ -5987,6 +6028,16 @@
                     "no": "135_3704",
                     "img": "SR3MP_3704",
                     "imgDamaged": "SR3MP_3704_D"
+                },
+                {
+                    "name": "SR3MP_4101",
+                    "cnname": "神子上上签",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "135_4101",
+                    "img": "SR3MP_4101",
+                    "imgDamaged": "SR3MP_4101_D"
                 }
             ]
         },
@@ -8780,7 +8831,7 @@
             "type": "AR",
             "enexist": true,
             "twexist": true,
-            "jpexist": false,
+            "jpexist": true,
             "krexist": true,
             "cnexist": true,
             "name": "AN94",
@@ -8839,7 +8890,7 @@
             "type": "AR",
             "enexist": true,
             "twexist": true,
-            "jpexist": false,
+            "jpexist": true,
             "krexist": true,
             "cnexist": true,
             "name": "AK12",
@@ -10031,7 +10082,7 @@
             "type": "AR",
             "enexist": false,
             "twexist": true,
-            "jpexist": false,
+            "jpexist": true,
             "krexist": true,
             "cnexist": true,
             "name": "Type03",
@@ -10615,7 +10666,18 @@
                     "imgDamaged": "Falcon_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "Falcon_4107",
+                    "cnname": "伴君侧",
+                    "twname": "",
+                    "jpname": "君とともに",
+                    "krname": "",
+                    "no": "256_4107",
+                    "img": "Falcon_4107",
+                    "imgDamaged": "Falcon_4107_D"
+                }
+            ]
         },
         "257": {
             "type": "RF",
@@ -11067,8 +11129,8 @@
             "krexist": true,
             "cnexist": true,
             "name": "4type",
-            "cnname": "Type 4",
-            "twname": "Type 4",
+            "cnname": "四式",
+            "twname": "四式",
             "jpname": "Type 4",
             "krname": "Type 4",
             "enname": "4type",
@@ -11076,8 +11138,8 @@
             "imgs": [
                 {
                     "name": "4type",
-                    "cnname": "Type 4",
-                    "twname": "Type 4",
+                    "cnname": "四式",
+                    "twname": "四式",
                     "jpname": "Type 4",
                     "krname": "Type 4",
                     "enname": "4type",
@@ -11096,6 +11158,16 @@
                     "no": "270_3505",
                     "img": "4type_3505",
                     "imgDamaged": "4type_3505_D"
+                },
+                {
+                    "name": "4type_4103",
+                    "cnname": "花拍子",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "270_4103",
+                    "img": "4type_4103",
+                    "imgDamaged": "4type_4103_D"
                 }
             ]
         },
@@ -11689,7 +11761,7 @@
             "twexist": false,
             "jpexist": true,
             "krexist": false,
-            "cnexist": false,
+            "cnexist": true,
             "name": "HowaType89",
             "cnname": "89式",
             "twname": "",
@@ -11911,6 +11983,35 @@
                     "no": "297",
                     "img": "M82",
                     "imgDamaged": "M82_D"
+                }
+            ],
+            "skins": []
+        },
+        "298": {
+            "type": "AR",
+            "enexist": false,
+            "twexist": true,
+            "jpexist": false,
+            "krexist": true,
+            "cnexist": true,
+            "name": "VEPR",
+            "cnname": "Vepr",
+            "twname": "Vepr",
+            "jpname": "Vepr",
+            "krname": "Vepr",
+            "enname": "Vepr",
+            "stars": 3,
+            "imgs": [
+                {
+                    "name": "VEPR",
+                    "cnname": "Vepr",
+                    "twname": "Vepr",
+                    "jpname": "Vepr",
+                    "krname": "Vepr",
+                    "enname": "Vepr",
+                    "no": "298",
+                    "img": "VEPR",
+                    "imgDamaged": "VEPR_D"
                 }
             ],
             "skins": []
@@ -14240,6 +14341,17 @@
             "h": 1024,
             "img": "2018SummerCG6-1"
         },
+        "59": {
+            "name": "BG-ContaminatedZone",
+            "cnname": "污染区",
+            "twname": "",
+            "jpname": "",
+            "krname": "",
+            "enname": "Contaminated zone",
+            "w": 1024,
+            "h": 1024,
+            "img": "BG-ContaminatedZone"
+        },
         "60": {
             "name": "2019summer_8",
             "cnname": "废弃异构体",
@@ -14251,16 +14363,60 @@
             "h": 1024,
             "img": "2019summer_8"
         },
-        "59": {
-            "name": "BG-ContaminatedZone",
-            "cnname": "污染区",
-            "twname": "",
-            "jpname": "",
-            "krname": "",
-            "enname": "Contaminated zone",
+        "61": {
+            "name": "19winter_aurora",
+            "cnname": "极光",
+            "twname": "19winter_aurora",
+            "jpname": "19winter_aurora",
+            "krname": "19winter_aurora",
+            "enname": "19winter_aurora",
             "w": 1024,
             "h": 1024,
-            "img": "BG-ContaminatedZone"
+            "img": "19winter_aurora"
+        },
+        "62": {
+            "name": "19winter_biggun",
+            "cnname": "岸防炮",
+            "twname": "19winter_biggun",
+            "jpname": "19winter_biggun",
+            "krname": "19winter_biggun",
+            "enname": "19winter_biggun",
+            "w": 1024,
+            "h": 1024,
+            "img": "19winter_biggun"
+        },
+        "63": {
+            "name": "19winter_doorexplode",
+            "cnname": "潜艇基地大门爆炸",
+            "twname": "19winter_doorexplode",
+            "jpname": "19winter_doorexplode",
+            "krname": "19winter_doorexplode",
+            "enname": "19winter_doorexplode",
+            "w": 1024,
+            "h": 1024,
+            "img": "19winter_doorexplode"
+        },
+        "64": {
+            "name": "19winter_inbg_2",
+            "cnname": "潜艇基地内部",
+            "twname": "19winter_inbg_2",
+            "jpname": "19winter_inbg_2",
+            "krname": "19winter_inbg_2",
+            "enname": "19winter_inbg_2",
+            "w": 1024,
+            "h": 1024,
+            "img": "19winter_inbg_2"
+        },
+        "65": {
+            "name": "19winter_ump45vs",
+            "cnname": "19winter_ump45vs",
+            "twname": "19winter_ump45vs",
+            "jpname": "19winter_ump45vs",
+            "krname": "19winter_ump45vs",
+            "enname": "19winter_ump45vs",
+            "w": 1024,
+            "h": 1024,
+            "img": "19winter_ump45vs"
         }
     }
 }

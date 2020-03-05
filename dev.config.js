@@ -14,7 +14,7 @@ module.exports = merge(common, {
 		port: '8888',
 		//publicPath: '/gfbadge/',
 		//open: true,
-	},	
+	},
 	plugins: [
 		new MiniCssExtractPlugin({
 			filename: '[name].css',
@@ -58,6 +58,10 @@ module.exports = merge(common, {
 						}
 					}
 				]
+			},
+			{
+				test: /\.js$/,
+				loader: "babel-loader"
 			}
 		]
 	},

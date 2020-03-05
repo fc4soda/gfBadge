@@ -20,8 +20,8 @@ module.exports = merge(common, {
 		}),
 		new webpack.DefinePlugin({
 			PRD_PREFIX: JSON.stringify('gfbadge/'),
-			SITE_PV_URL: JSON.stringify('https://www.fc4soda.moe/kis3/stats?view=count&url=fc4soda.github.io/gfbadge.html&format=json'),
-			SITE_PV_CHART_URL: JSON.stringify('https://www.fc4soda.moe/kis3/stats?view=months&url=fc4soda.github.io/gfbadge.html&format=chart'),
+			SITE_PV_URL: JSON.stringify('https://www.fc4soda.moe/kis3/stats?view=count&url=github.fc4soda.moe/gfbadge.html&format=json'),
+			SITE_PV_CHART_URL: JSON.stringify('https://www.fc4soda.moe/kis3/stats?view=months&url=github.fc4soda.moe/gfbadge.html&format=chart'),
 		}),
 	],
 	output: {
@@ -52,6 +52,10 @@ module.exports = merge(common, {
 						}
 					}
 				]
+			},
+			{
+				test: /\.js$/,
+				loader: "babel-loader"
 			}
 		]
 	},
