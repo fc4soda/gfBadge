@@ -1,5 +1,5 @@
 {
-    "version": "20200126",
+    "version": "20200411",
     "allGun": {
         "1": {
             "type": "HG",
@@ -370,6 +370,16 @@
                     "no": "8_1",
                     "img": "PM_1",
                     "imgDamaged": "PM_1_D"
+                },
+                {
+                    "name": "PM_4310",
+                    "cnname": "某不科学的向日葵",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "8_4310",
+                    "img": "PM_4310",
+                    "imgDamaged": "PM_4310_D"
                 }
             ]
         },
@@ -1870,7 +1880,18 @@
                     "imgDamaged": "98K_D"
                 }
             ],
-            "skins": []
+            "skins": [
+                {
+                    "name": "98K_4301",
+                    "cnname": "手心的朱砂痣",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "46_4301",
+                    "img": "98K_4301",
+                    "imgDamaged": "98K_4301_D"
+                }
+            ]
         },
         "47": {
             "type": "RF",
@@ -3018,6 +3039,16 @@
                     "no": "70_1406",
                     "img": "FNFNC_1406",
                     "imgDamaged": "FNFNC_1406_D"
+                },
+                {
+                    "name": "FNFNC_4308",
+                    "cnname": "草莓蛋糕与波斯花",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "70_4308",
+                    "img": "FNFNC_4308",
+                    "imgDamaged": "FNFNC_4308_D"
                 }
             ]
         },
@@ -4201,8 +4232,37 @@
                     "no": "97_2303",
                     "img": "M950A_2303",
                     "imgDamaged": "M950A_2303_D"
+                },
+                {
+                    "name": "M950A_4302",
+                    "cnname": "柳莺与蔷薇",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "97_4302",
+                    "img": "M950A_4302",
+                    "imgDamaged": "M950A_4302_D"
                 }
-            ]
+            ],
+            "mods": {
+                "mod3": {
+                    "enexist": false,
+                    "twexist": true,
+                    "jpexist": false,
+                    "krexist": true,
+                    "cnexist": true,
+                    "name": "M950AMod",
+                    "cnname": "M950AMod",
+                    "twname": "M950AMod",
+                    "jpname": "M950AMod",
+                    "krname": "M950AMod",
+                    "enname": "M950AMod",
+                    "no": "97m",
+                    "stars": 6,
+                    "img": "M950AMod",
+                    "imgDamaged": "M950AMod_D"
+                }
+            }
         },
         "98": {
             "type": "HG",
@@ -6760,7 +6820,26 @@
                     "img": "M500_3707",
                     "imgDamaged": "M500_3707_D"
                 }
-            ]
+            ],
+            "mods": {
+                "mod3": {
+                    "enexist": false,
+                    "twexist": true,
+                    "jpexist": false,
+                    "krexist": true,
+                    "cnexist": true,
+                    "name": "M500Mod",
+                    "cnname": "M500Mod",
+                    "twname": "M500Mod",
+                    "jpname": "M500Mod",
+                    "krname": "M500Mod",
+                    "enname": "M500Mod",
+                    "no": "154m",
+                    "stars": 4,
+                    "img": "M500Mod",
+                    "imgDamaged": "M500Mod_D"
+                }
+            }
         },
         "155": {
             "type": "SG",
@@ -6947,6 +7026,16 @@
                     "no": "159_1705",
                     "img": "RMB93_1705",
                     "imgDamaged": "RMB93_1705_D"
+                },
+                {
+                    "name": "RMB93_4309",
+                    "cnname": "触不到的月光情人",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "159_4309",
+                    "img": "RMB93_4309",
+                    "imgDamaged": "RMB93_4309_D"
                 }
             ]
         },
@@ -7176,6 +7265,16 @@
                     "no": "165_2906",
                     "img": "M1014_2906",
                     "imgDamaged": "M1014_2906_D"
+                },
+                {
+                    "name": "M1014_4305",
+                    "cnname": "天使像前的心跳",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "165_4305",
+                    "img": "M1014_4305",
+                    "imgDamaged": "M1014_4305_D"
                 }
             ]
         },
@@ -8476,6 +8575,16 @@
                     "no": "196_2104",
                     "img": "ZastavaM21_2104",
                     "imgDamaged": "ZastavaM21_2104_D"
+                },
+                {
+                    "name": "ZastavaM21_4304",
+                    "cnname": "花之后的情愫",
+                    "twname": "",
+                    "jpname": "",
+                    "krname": "",
+                    "no": "196_4304",
+                    "img": "ZastavaM21_4304",
+                    "imgDamaged": "ZastavaM21_4304_D"
                 }
             ]
         },
@@ -9464,7 +9573,26 @@
                     "imgDamaged": "GSH18_D"
                 }
             ],
-            "skins": []
+            "skins": [],
+            "mods": {
+                "mod3": {
+                    "enexist": false,
+                    "twexist": true,
+                    "jpexist": false,
+                    "krexist": true,
+                    "cnexist": true,
+                    "name": "GSH18Mod",
+                    "cnname": "GSh-18Mod",
+                    "twname": "GSh-18Mod",
+                    "jpname": "GSh-18Mod",
+                    "krname": "GSh-18Mod",
+                    "enname": "GSh-18Mod",
+                    "no": "221m",
+                    "stars": 4,
+                    "img": "GSH18Mod",
+                    "imgDamaged": "GSH18Mod_D"
+                }
+            }
         },
         "222": {
             "type": "RF",
@@ -10518,7 +10646,26 @@
                     "img": "KSVK_3805",
                     "imgDamaged": "KSVK_3805_D"
                 }
-            ]
+            ],
+            "mods": {
+                "mod3": {
+                    "enexist": false,
+                    "twexist": true,
+                    "jpexist": false,
+                    "krexist": true,
+                    "cnexist": true,
+                    "name": "KSVKMod",
+                    "cnname": "KSVKMod",
+                    "twname": "KSVKMod",
+                    "jpname": "KSVKMod",
+                    "krname": "KSVKMod",
+                    "enname": "KSVKMod",
+                    "no": "252m",
+                    "stars": 5,
+                    "img": "KSVKMod",
+                    "imgDamaged": "KSVKMod_D"
+                }
+            }
         },
         "253": {
             "type": "MG",
@@ -12012,6 +12159,64 @@
                     "no": "298",
                     "img": "VEPR",
                     "imgDamaged": "VEPR_D"
+                }
+            ],
+            "skins": []
+        },
+        "299": {
+            "type": "SG",
+            "enexist": false,
+            "twexist": true,
+            "jpexist": false,
+            "krexist": true,
+            "cnexist": true,
+            "name": "HSM10",
+            "cnname": "高标10型",
+            "twname": "高标10型",
+            "jpname": "高标10型",
+            "krname": "HSM10",
+            "enname": "HSM10",
+            "stars": 3,
+            "imgs": [
+                {
+                    "name": "HSM10",
+                    "cnname": "高标10型",
+                    "twname": "HSM10",
+                    "jpname": "HSM10",
+                    "krname": "HSM10",
+                    "enname": "HSM10",
+                    "no": "299",
+                    "img": "HSM10",
+                    "imgDamaged": "HSM10_D"
+                }
+            ],
+            "skins": []
+        },
+        "300": {
+            "type": "MG",
+            "enexist": false,
+            "twexist": true,
+            "jpexist": false,
+            "krexist": true,
+            "cnexist": true,
+            "name": "CAR",
+            "cnname": "CAR",
+            "twname": "CAR",
+            "jpname": "CAR",
+            "krname": "CAR",
+            "enname": "CAR",
+            "stars": 3,
+            "imgs": [
+                {
+                    "name": "CAR",
+                    "cnname": "CAR",
+                    "twname": "CAR",
+                    "jpname": "CAR",
+                    "krname": "CAR",
+                    "enname": "CAR",
+                    "no": "300",
+                    "img": "CAR",
+                    "imgDamaged": "CAR_D"
                 }
             ],
             "skins": []
@@ -13700,7 +13905,11 @@
         "101",
         "103",
         "31",
-        "12"
+        "12",
+        "221",
+        "252",
+        "154",
+        "97"
     ],
     "background": {
         "3": {

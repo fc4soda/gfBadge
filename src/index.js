@@ -230,7 +230,7 @@ let userAvatarSize = 116, userAvatarX = 40, userAvatarY = 44,
 // TODO change px to ratio
 var now = new Date().toISOString().split('T')[0],
 	logo = "Girls' Frontline",
-	dataVersion = 20200120;
+	dataVersion = 20200411;
 var UIData = {
 	"mod": {
 		"background": {
@@ -328,7 +328,7 @@ var UIData = {
 		},
 		"guns": {
 			"x": 250,
-			"y": 25,
+			"y": 10,
 			"r": 20,
 			"limit": 10,
 			"alpha": 0.3,
@@ -558,6 +558,7 @@ var selectedRate = {
 			"RF": 0,
 			"HG": 0,
 			"MG": 0,
+			"SG": 0,
 		},
 		"coll": {
 			"ARchecked": false,
@@ -565,6 +566,7 @@ var selectedRate = {
 			"RFchecked": false,
 			"HGchecked": false,
 			"MGchecked": false,
+			"SGchecked": false,
 			"Allchecked": false,
 		},
 	},
@@ -577,6 +579,7 @@ var selectedRate = {
 			"HG": 0,
 			"SG": 0,
 			"MG": 0,
+			"SG": 0,
 		},
 		"coll": {
 			"ARchecked": false,
@@ -585,6 +588,7 @@ var selectedRate = {
 			"HGchecked": false,
 			"SGchecked": false,
 			"MGchecked": false,
+			"SGchecked": false,
 			"Allchecked": false,
 		},
 	},
@@ -1437,6 +1441,11 @@ v-on:change="onChange"
 							var result = dataConvert20200120(sposter, smod);
 							sposter = result.data;
 							smod = result.data2;
+						} else if (version == 20200120) {
+							srate.mod.collectionRate.SG = 0;
+							srate.mod.coll.SGchecked = false;
+							srate.poster.collectionRate.SG = 0;
+							srate.poster.coll.SGchecked = false;
 						}
 						Object.assign(this.selected, s ? s : this.selected);
 						Object.assign(this.selectedMod, smod ? smod : this.selectedMod);
